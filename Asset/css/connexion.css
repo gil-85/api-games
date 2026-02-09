@@ -1,0 +1,146 @@
+#p-error_message{
+  text-align: center;
+  color: var(--warning);
+  background-image: linear-gradient(-90deg, #0000, #000, #0000);
+
+  /*text-shadow: -1px -1px 4px #000, -1px 1px 4px #000, 1px -1px 4px #000, 1px 1px 4px #000;*/
+}
+
+ /*     LIKE RESEARCH     */
+form> button {
+  display: flex;
+  justify-content: space-between;
+}
+
+form> button> span {
+  padding: 0 2em;
+  color: var(--search_count-clr);  
+  position: relative;
+  height: 0;
+  bottom: .24em;
+}
+
+/*
+.avatarSet{
+  background-color: #f008;
+}
+*/
+ 
+.show_list {
+  display: grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  position: fixed;
+  inset: 0px;
+  top: 5em;
+  height: 70dvh;
+  background-color: var(--bkg-btn);
+  border: .1em dashed #f000;
+}
+.d-grid_1 {
+  grid-row: 1/10;
+  grid-column: 1 / 5;
+  border: .0em solid red;
+
+  border-right: .1em solid var(--txt-clr);
+  overflow-y: scroll;
+}
+
+.d-grid_2 {
+  grid-row: 1/10; 
+  grid-column: 5 / 11; 
+  border: .0em solid blue;
+
+  overflow-y: scroll;
+  position: relative; 
+}
+
+.d-grid_3 {
+  grid-row: 10 / 11;
+  grid-column: 1 / 11;
+ 
+  background-image: #0000;
+  border: .0em solid lime;
+}
+/*  
+.d-grid_2> .d-grid_2_input-hand{
+  height: 50%;
+  margin: 25% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+ */
+ /*     LIKE RESEARCH     */
+ 
+ 
+#d-element_avatar{
+  font-size: 2.8rem;
+  height: 25dvw;
+  border-bottom: .1em solid var(--txt-clr);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  
+  background-image: linear-gradient(-225deg, hsl(330, 100%, 95%), hsl(0, 100%, 50%), hsl(30, 100%, 5%));
+  text-shadow:
+    -2px 0px 0px var(--txt-clr_neg),
+    0px -2px 0px var(--txt-clr_neg),
+    2px 0px 0px var(--txt-clr_neg),
+    0px 2px 0px var(--txt-clr_neg)
+    ;
+}
+
+
+
+
+.d-d-input_avatar{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: .4em;
+  border-bottom: .1em solid var(--txt-clr);
+}
+
+
+.d-input_avatar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 1.4rem;
+  font-weight: bold;
+  height: 4em;
+
+  margin: .4em 0;
+  border: .1em solid var(--txt-clr); 
+}
+
+.d-input_avatar>button{
+  font-size: 1.4rem;
+  font-weight: bold;
+
+  height: 100%;
+  padding: 0 .8em;
+  color: var(--txt-clr);
+  background-color: var(--bkg-clr_00);
+}
+
+.d-input_avatar> input{
+  width: 100%;
+}
+
+#bkg{
+  height: 50%;
+  padding: 0 1.5em;
+  background-image: linear-gradient(-225deg, hsl(330, 100%, 95%), hsl(0, 100%, 50%), hsl(30, 100%, 5%));
+  
+  text-shadow:
+    -2px 0px 0px var(--txt-clr_neg),
+    0px -2px 0px var(--txt-clr_neg),
+    2px 0px 0px var(--txt-clr_neg),
+    0px 2px 0px var(--txt-clr_neg)
+    ;
+}

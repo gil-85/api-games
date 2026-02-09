@@ -1,0 +1,93 @@
+:root{
+  --side_space: .4em;
+}
+
+#content{
+  margin: 1em var(--side_space);
+  border: .2em solid var(--bkg-clr_00); 
+}
+
+#description{
+  padding: .4em .4em 1em;
+}
+
+#item-game_info_1{
+  height: 6.5em;
+  margin: 0 .2em 0;
+
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  row-gap: .2em;
+  border-top: .1em solid var(--bkg-clr_01); 
+}
+
+
+#item-game_info_2{
+  margin: 0 .2em 2em;
+  padding: .4em;
+
+  background-color: var(--bkg-clr_01);
+}
+
+#item-tags{
+  margin: 0 1em 2em;
+  padding: .4em;
+  border: .1em solid var(--bkg-clr_00);
+}
+
+
+
+#item-tags> p{
+  margin-bottom: .4em;
+}
+
+
+
+
+
+
+.d-screens-movies{
+  margin: 1em var(--side_space);
+  background-color: var(--bkg-clr_00);
+}
+
+.d-screens-movies_item{
+  margin-top: 2em;
+  background-color: var(--bkg-clr_01);
+}
+
+.content-secondary{
+  text-align: center;
+  margin: 1em var(--side_space);
+  padding: 1em;
+  border: .1em solid var(--bkg-clr_00);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.d-serie-dlc_item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 8em;
+  aspect-ratio: 3/2;
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+  border: .1em solid var(--txt-clr); 
+}
+
+.d-serie-dlc_item> p{
+ background-color: var(--bkg-btn);
+}
+
+@media (min-width: 768px) {
+  :root{
+    --side_space: 4em;
+  }
+
+}
