@@ -1,17 +1,17 @@
 <?php
 
-function searchIfUserExist($email, $logname) {
-   require_once("dbh.php");
+// function searchIfUserExist($email, $logname) {
+//    require_once("dbh.php");
   
-   $query = "SELECT email, logname FROM users WHERE email = ? OR logname = ?;";
-   $stmt = $pdo->prepare($query);
-   $stmt->execute([$email, $logname]);
+//    $query = "SELECT email, logname FROM users WHERE email = ? OR logname = ?;";
+//    $stmt = $pdo->prepare($query);
+//    $stmt->execute([$email, $logname]);
    
-   $user = $stmt->fetch(PDO::FETCH_ASSOC);
-   $pdo = null;
-   $stmt = null;
-   return $user;
-} 
+//    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+//    $pdo = null;
+//    $stmt = null;
+//    return $user;
+// } 
    
 
 function  signIn($email, $logname, $password, $avatar){
@@ -81,10 +81,28 @@ function updateUser($logname, $avatar) {
    return $result;
 }
 
+
+
+
+function isFavorite($userId, $gameId){
+    require_once("dbh.php");
+
+    $query = "SELECT EXISTS (SELECT 1 FROM favorite WHERE user_id = ? AND game_id = ?) AS fav_exists";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$userId, $gameId]);
+
+    $exists = (bool) $stmt->fetchColumn();
+
+    return $exists;
+}
+
+
 function addFav($userId, $gameId){
     require_once("dbh.php");
   
-   $query = "INSERT INTO favorite (user_id, game_id) VALUES (?,?);";
+    $query = "INSERT INTO favorite (user_id, game_id) VALUES (?,?);";
+   
    $stmt = $pdo->prepare($query);
 
    // Check if the query was executed successfully

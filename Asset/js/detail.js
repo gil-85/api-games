@@ -52,6 +52,43 @@ const showArray = (params, name, maxLength = 1000) => {
     return;
 };
 
+function checkFavorite(spnUserId, dataDetailId){
+  
+  const formData = new FormData();
+  let action= `isFavorite`;
+  formData.append(`action`, action);
+  formData.append(`user_id`, spnUserId);
+  formData.append(`game_id`, dataDetailId);
+
+  
+
+  const isFavorite = async(formData) => {
+    try {
+      const res = await fetch('../Controller/users_controller.php', {
+        method: 'POST',
+        body: formData,
+      });
+      if ( ! res.ok) throw new Error('Network response was not ok');
+
+      const data = await res.json();  
+
+  console.log(data.response);
+        alert(data.response);
+
+      if(data.response !== true){
+        errorMessage.textContent = data.response;
+    
+        return;
+      } 
+    }catch (error) {
+      console.error('Error:', error);
+    }   
+  }
+  isFavorite(formData);
+}
+
+
+
 //// FETCH GAME BY ID ////
 const loadGame = async () => {
   try{
@@ -63,99 +100,15 @@ const loadGame = async () => {
 
     //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
     if (settingsButton){
-      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}"> ♡ ${dataDetail.id} </button>`;
-    }else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
-
-
-    let tags = 'Tags unavailable';
-    let backgroundImage = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
-    let description = 'Description unavailable'; 
-    let genres = 'Genres unavailable';
-    let esrb = 'ESRB unavailable';
-    let backgroundImageAdditional = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
-    let platforms = 'Platforms unavailable';
-    let releaseDate = 'Release date unavailable';
-    let metacriticUrl = '';
-    let developers = 'Developers unavailable';
-      
-    if(dataDetail.background_image !== null && dataDetail.background_image !== undefined && dataDetail.background_image.length > 0)
-      backgroundImage = `<img src="${dataDetail.background_image}" alt="${dataDetail.name} image">`;
-        
-    if(dataDetail.description !== null && dataDetail.description !== undefined && description.length > 0)
-        description = dataDetail.description;
-      
-    if(dataDetail.genres !== null && dataDetail.genres !== undefined && dataDetail.genres.length > 0)
-        genres = showArray(dataDetail.genres, 'genres');
-  
-    if(dataDetail.esrb !== null && dataDetail.esrb !== undefined && dataDetail.esrb.length > 0)
-        esrb = dataDetail.esrb;
-      
-      
-    if(dataDetail.background_image_additional !== null && dataDetail.background_image_additional !== undefined && dataDetail.background_image_additional.length > 0)
-         backgroundImageAdditional = `<img src="${dataDetail.background_image_additional}" alt="${dataDetail.name} image">`;  
-         
-    if(dataDetail.platforms !== null && dataDetail.platforms !== undefined && dataDetail.platforms.length > 0)
-        platforms = showArray(dataDetail.platforms, `platforms`);
-        
-    if(dataDetail.released !== null && dataDetail.released !== undefined && dataDetail.released.length > 0)
-        releaseDate = `Release date: ${dataDetail.released}`;  
-      
-    if(dataDetail.metacritic_url !== null && dataDetail.metacritic_url !== undefined && dataDetail.metacritic_url.length > 0)
-        metacriticUrl = `<a href="${dataDetail.metacritic_url}" target="blank">Link metacritic</a>`; 
-      
-    if(dataDetail.tags !== null && dataDetail.tags !== undefined && dataDetail.tags.length > 0)
-      tags = showArray(dataDetail.tags, 'tags');
-
-    if(dataDetail.developers !== null && dataDetail.developers !== undefined && dataDetail.developers.length > 0)
-    developers = showArray(dataDetail.developers, 'developers');
-    
-     //// CREATE THE ELEMENT TO DISPLAY ////
-    const item =
-    `
-      <div>
-        ${backgroundImage}
-      </div>
-
-      <div id="description">
-        <p>${description}</p>
-      </div>
-      
-      <div id="item-game_info_1">
-        <small>Genre : ${genres}</small>
-        <small>Developeurs : ${developers}</small>
-        <small>${esrb}</small> 
-      </div>   
-      
-      
-      <div>
-        ${backgroundImageAdditional}
-      </div>
-
-      <div id="item-game_info_2">
-        <div>${platforms}</div>
-        <div>${releaseDate}</div>
-      </div>
-      
-        <div id="item-tags">
-          <p>Tags :</p>
-          ${tags}
-        </div>
-
-      <div class="a-btn">${metacriticUrl}</div>
-    `;
-
-    content.insertAdjacentHTML(`beforeend`, item);
-    eventToImgs();
-
-
-
-        
-
-    //// BUTTON TO ADD IN FAVORIES
-    if (settingsButton){
-
       const spnUserId= document.querySelector(`#spn-user_id`).textContent;
-      
+
+      checkFavorite(spnUserId, dataDetail.id);
+    
+
+      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}"> ♡ ${dataDetail.id} </button>`;
+    
+  
+    //// BUTTON TO ADD IN FAVORIES
       const btnFav= document.querySelector(`#fav_${dataDetail.id}`);
       btnFav.addEventListener(`click`, e=> {
         const formData = new FormData();
@@ -166,29 +119,108 @@ const loadGame = async () => {
         console.log(e.target.id);
         addFav(formData);
       })
-    }
+    
+      const addFav = async(formData) => {
+        try {
+          const res = await fetch('../Controller/users_controller.php', {
+            method: 'POST',
+            body: formData,
+          });
 
-    const addFav = async(formData) => {
-      try {
-        const res = await fetch('../Controller/users_controller.php', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if ( ! res.ok) throw new Error('Network response was not ok');
-      
-      /////////////////////////////////////////////////////////////
-        const data = await res.json();  
-        if(data.response !== true){
-          errorMessage.textContent = data.response;
+          if ( ! res.ok) throw new Error('Network response was not ok');
         
-          console.log(data.response);
-          return;
-        } 
-      }catch (error) {
-          console.error('Error:', error);
-      }   
-    }
+          const data = await res.json();  
+          if(data.response !== true){
+            errorMessage.textContent = data.response;
+          
+            console.log(data.response);
+            return;
+          } 
+        }catch (error) {
+            console.error('Error:', error);
+        }   
+      }
+/////////////////////////////////////////////////////////////////
+    }else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
+
+
+
+    
+    
+  let tags = 'Tags unavailable';
+  let backgroundImage = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
+  let description = 'Description unavailable'; 
+  let genres = 'Genres unavailable';
+  let esrb = 'ESRB unavailable';
+  let backgroundImageAdditional = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
+  let platforms = 'Platforms unavailable';
+  let releaseDate = 'Release date unavailable';
+  let metacriticUrl = '';
+  let developers = 'Developers unavailable';
+    
+  if(dataDetail.background_image !== null && dataDetail.background_image !== undefined && dataDetail.background_image.length > 0)
+    backgroundImage = `<img src="${dataDetail.background_image}" alt="${dataDetail.name} image">`;
+      
+  if(dataDetail.description !== null && dataDetail.description !== undefined && description.length > 0)
+      description = dataDetail.description;
+    
+  if(dataDetail.genres !== null && dataDetail.genres !== undefined && dataDetail.genres.length > 0)
+      genres = showArray(dataDetail.genres, 'genres');
+
+  if(dataDetail.esrb !== null && dataDetail.esrb !== undefined && dataDetail.esrb.length > 0)
+      esrb = dataDetail.esrb;
+    
+    
+  if(dataDetail.background_image_additional !== null && dataDetail.background_image_additional !== undefined && dataDetail.background_image_additional.length > 0)
+       backgroundImageAdditional = `<img src="${dataDetail.background_image_additional}" alt="${dataDetail.name} image">`;  
+       
+  if(dataDetail.platforms !== null && dataDetail.platforms !== undefined && dataDetail.platforms.length > 0)
+      platforms = showArray(dataDetail.platforms, `platforms`);
+      
+  if(dataDetail.released !== null && dataDetail.released !== undefined && dataDetail.released.length > 0)
+      releaseDate = `Release date: ${dataDetail.released}`;  
+    
+  if(dataDetail.metacritic_url !== null && dataDetail.metacritic_url !== undefined && dataDetail.metacritic_url.length > 0)
+      metacriticUrl = `<a href="${dataDetail.metacritic_url}" target="blank">Link metacritic</a>`; 
+    
+  if(dataDetail.tags !== null && dataDetail.tags !== undefined && dataDetail.tags.length > 0)
+    tags = showArray(dataDetail.tags, 'tags');
+  if(dataDetail.developers !== null && dataDetail.developers !== undefined && dataDetail.developers.length > 0)
+  developers = showArray(dataDetail.developers, 'developers');
+  
+   //// CREATE THE ELEMENT TO DISPLAY ////
+  const item =
+  `
+    <div>
+      ${backgroundImage}
+    </div>
+    <div id="description">
+      <p>${description}</p>
+    </div>
+    
+    <div id="item-game_info_1">
+      <small>Genre : ${genres}</small>
+      <small>Developeurs : ${developers}</small>
+      <small>${esrb}</small> 
+    </div>   
+    
+    
+    <div>
+      ${backgroundImageAdditional}
+    </div>
+    <div id="item-game_info_2">
+      <div>${platforms}</div>
+      <div>${releaseDate}</div>
+    </div>
+    
+      <div id="item-tags">
+        <p>Tags :</p>
+        ${tags}
+      </div>
+    <div class="a-btn">${metacriticUrl}</div>
+  `;
+  content.insertAdjacentHTML(`beforeend`, item);
+  eventToImgs();
 
 
 
@@ -222,16 +254,11 @@ const loadGame = async () => {
 
 
 
-
-
-
-
-
-    loadingElement.classList.add(`ninja`);
+  loadingElement.classList.add(`ninja`);
    
-    }catch(err){
-      alert(`ERROR : ${err}`);
-   }
+  }catch(err){
+    alert(`ERROR : ${err}`);
+  }
 }
 
 
