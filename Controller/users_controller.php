@@ -110,6 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
       }
       
     break;   
+
+    case 'addFav' :
+
+      $userId = $_POST['user_id'];
+      $gameId = $_POST['game_id'];
+
+      try{
+        $result = addFav($userId, $gameId);
+        
+        $data = array('response' => $result);
+        echo json_encode($data); 
+      }catch(Exception $e){
+        $data = array('response' => 'Error: ' . $e->getMessage());
+        echo json_encode($data); 
+      }
+
+
+    break; 
+
   }
 
 

@@ -60,7 +60,12 @@ const loadGame = async () => {
     const resDetail = await fetch(urlDetail);
     const dataDetail = await resDetail.json();
     console.log(dataDetail);
-    document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}"> ♡ ${dataDetail.id} </button>`;
+
+    //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
+    if (settingsButton){
+      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}"> ♡ ${dataDetail.id} </button>`;
+    }else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
+
 
     let tags = 'Tags unavailable';
     let backgroundImage = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
@@ -142,21 +147,84 @@ const loadGame = async () => {
     content.insertAdjacentHTML(`beforeend`, item);
     eventToImgs();
 
+
+
+        
+
     //// BUTTON TO ADD IN FAVORIES
-    const btnFav= document.querySelector(`#fav_${dataDetail.id}`);
-    btnFav.addEventListener(`click`, e=> {
-      if ( ! settingsButton){
-        console.log(`need 2 b co`);
-        return;
-      } 
+    if (settingsButton){
+
+      const spnUserId= document.querySelector(`#spn-user_id`).textContent;
       
-      const formData = new FormData();
-      let action= `add`;
-      formData.append(`action`, action);
-      formData.append(`game_id`, dataDetail.id);
-      console.log(e.target.id);
-      addFav(formData);
-    })
+      const btnFav= document.querySelector(`#fav_${dataDetail.id}`);
+      btnFav.addEventListener(`click`, e=> {
+        const formData = new FormData();
+        let action= `addFav`;
+        formData.append(`action`, action);
+        formData.append(`user_id`, spnUserId);
+        formData.append(`game_id`, dataDetail.id);
+        console.log(e.target.id);
+        addFav(formData);
+      })
+    }
+
+    const addFav = async(formData) => {
+      try {
+        const res = await fetch('../Controller/users_controller.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if ( ! res.ok) throw new Error('Network response was not ok');
+      
+      /////////////////////////////////////////////////////////////
+        const data = await res.json();  
+        if(data.response !== true){
+          errorMessage.textContent = data.response;
+        
+          console.log(data.response);
+          return;
+        } 
+      }catch (error) {
+          console.error('Error:', error);
+      }   
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     loadingElement.classList.add(`ninja`);
@@ -167,9 +235,7 @@ const loadGame = async () => {
 }
 
 
-function addFav(formData){
-  console.log(formData);
-}
+
 
 
 let pageSreens = 1;

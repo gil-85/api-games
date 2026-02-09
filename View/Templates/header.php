@@ -57,13 +57,13 @@
     </h1></div>
     <?php
       if (isset($_SESSION['user_id'])) {
-        echo '_id: ' .  $_SESSION['user_id'];
+        echo '_id: <span id= "spn-user_id">' .  $_SESSION['user_id'] . '</span>';
         echo '&emsp; _email: ' . $_SESSION['email'];
         echo '&emsp; _logname: ' . $_SESSION['logname'];
         echo '&emsp;_avatar: <span id="header_avatar">'. $_SESSION['avatar'] . '</span>';
         echo '&emsp; <button type="button" id="edit_user">Edit</button>';
       } else {
-        echo 'Not connected';
+        echo 'Not logged';
       }
     ?>
   </header>

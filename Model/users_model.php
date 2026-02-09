@@ -80,3 +80,20 @@ function updateUser($logname, $avatar) {
    // Return success or failure
    return $result;
 }
+
+function addFav($userId, $gameId){
+    require_once("dbh.php");
+  
+   $query = "INSERT INTO favorite (user_id, game_id) VALUES (?,?);";
+   $stmt = $pdo->prepare($query);
+
+   // Check if the query was executed successfully
+   $result = $stmt->execute([$userId, $gameId]);
+
+   // Close the connection and statement
+   $pdo = null;
+   $stmt = null;
+
+   // Return success or failure
+   return $result;
+}
