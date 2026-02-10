@@ -17,23 +17,22 @@ document.querySelector(`form`).addEventListener(`submit`,(e)=>{
 
     
    if(errorMessage.textContent === '') {
-     //action = 'searchUser';
-     action = 'logIn';
-     password = CryptoJS.SHA256(password).toString();
-     formData.append('action', action);
-     formData.append('emailogname', emailogname);
-     formData.append('password', password);
-
-     //searchUser(formData);
-     logIn(formData);
+      //action = 'searchUser';
+      action = 'logIn';
+      password = CryptoJS.SHA256(password).toString();
+      formData.append('action', action);
+      formData.append('emailogname', emailogname);
+      formData.append('password', password);
+      
+      //searchUser(formData);
+      logIn(formData);
    }
    
    return;
- 
+   
 });
 
 const logIn = async (formData) => {
-
    try {
       
       const res = await fetch('../Controller/users_controller.php', {
@@ -46,11 +45,11 @@ const logIn = async (formData) => {
       ////////////////////////////////////////////////////////////////
 
       const data = await res.json();
-    
+      
       if(data.response !== true){
-          errorMessage.textContent = data.response;
-          console.log(data);
-          console.log(data.response);
+         errorMessage.textContent = data.response;
+         console.log(data);
+         console.log(data.response);
          return;
        } else window.location = '../index.php';
    

@@ -111,12 +111,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
       
     break;   
 
-    case 'isFavorite' :
+
+
+    case 'checkIfFav' :
+      
       $userId = $_POST['user_id'];
       $gameId = $_POST['game_id'];
 
       try{
-        $result = isFavorite($userId, $gameId);
+        $result = checkIfFav($userId, $gameId);
         
         $data = array('response' => $result);
         echo json_encode($data); 

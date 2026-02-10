@@ -13,6 +13,7 @@ const id = urlDetailsParams.get("id");
 const btnLoadMore = document.querySelector(`#btn-load_more`);
 const btnMoreScreenshots = document.querySelector('#btn-more_screenshots');
 
+let isFavorite= false;
 
 //// FORMAT ARRAYS RESULTS ////
 const getStrGenres = (genres) => { return genres.map(each => each.name).join(', '); };
@@ -52,17 +53,18 @@ const showArray = (params, name, maxLength = 1000) => {
     return;
 };
 
+
+
 function checkFavorite(spnUserId, dataDetailId){
   
   const formData = new FormData();
-  let action= `isFavorite`;
+  let action= `checkIfFav`;
   formData.append(`action`, action);
   formData.append(`user_id`, spnUserId);
   formData.append(`game_id`, dataDetailId);
 
-  
 
-  const isFavorite = async(formData) => {
+  const checkIfFav = async(formData) => {
     try {
       const res = await fetch('../Controller/users_controller.php', {
         method: 'POST',
@@ -71,56 +73,50 @@ function checkFavorite(spnUserId, dataDetailId){
       if ( ! res.ok) throw new Error('Network response was not ok');
 
       const data = await res.json();  
+        
+      
+      isFavorite= data.response;
 
-  console.log(data.response);
-        alert(data.response);
+      console.log('is fav = ' + isFavorite);
+      console.log(isFavorite, typeof isFavorite);
 
-      if(data.response !== true){
-        errorMessage.textContent = data.response;
-    
-        return;
-      } 
-    }catch (error) {
-      console.error('Error:', error);
-    }   
-  }
-  isFavorite(formData);
-}
+      let btnFav;
+      let action;
+      
+     if(isFavorite){
+      console.log('hihi');
+      document.querySelector('h2').innerHTML+= `<button id="remove_fav">:/remove</button>`;
+      btnFav= document.querySelector(`#remove_fav`);
+      action= `removeFav`;
+     } 
+     else{
+       console.log('dang');
+       document.querySelector('h2').innerHTML+=  `<button id="add_fav">:/add</button>`;
+       btnFav= document.querySelector(`#add_fav`);
+       action= `addFav`;
+     } 
 
 
-
-//// FETCH GAME BY ID ////
-const loadGame = async () => {
-  try{
-    urlDetail = `https://api.rawg.io/api/games/${id}?key=${apikey}`; 
-    
-    const resDetail = await fetch(urlDetail);
-    const dataDetail = await resDetail.json();
-    console.log(dataDetail);
-
-    //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
-    if (settingsButton){
-      const spnUserId= document.querySelector(`#spn-user_id`).textContent;
-
-      checkFavorite(spnUserId, dataDetail.id);
-    
-
-      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}"> ♡ ${dataDetail.id} </button>`;
-    
-  
+      
     //// BUTTON TO ADD IN FAVORIES
-      const btnFav= document.querySelector(`#fav_${dataDetail.id}`);
+      
       btnFav.addEventListener(`click`, e=> {
         const formData = new FormData();
-        let action= `addFav`;
         formData.append(`action`, action);
         formData.append(`user_id`, spnUserId);
-        formData.append(`game_id`, dataDetail.id);
+        formData.append(`game_id`, dataDetailId);
         console.log(e.target.id);
-        addFav(formData);
+
+        //if ( ! isFavorite)
+        toggleFav(formData);
       })
-    
-      const addFav = async(formData) => {
+
+
+
+
+
+      
+      const toggleFav = async(formData) => {
         try {
           const res = await fetch('../Controller/users_controller.php', {
             method: 'POST',
@@ -140,8 +136,58 @@ const loadGame = async () => {
             console.error('Error:', error);
         }   
       }
+
+
+
+
+
+
+
+
+
+      return;
+    }catch (error) {
+      console.error('Error:', error);
+    }   
+  }
+  checkIfFav(formData);
+}
+
+
+
+//// FETCH GAME BY ID ////
+const loadGame = async () => {
+  try{
+    urlDetail = `https://api.rawg.io/api/games/${id}?key=${apikey}`; 
+    
+    const resDetail = await fetch(urlDetail);
+    const dataDetail = await resDetail.json();
+    console.log(dataDetail);
+    
+    //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
+    if (settingsButton){
+      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
+      const spnUserId= document.querySelector(`#spn-user_id`).textContent;
+      
+      checkFavorite(spnUserId, dataDetail.id);
+      
+      
+      
+      // if ( ! isFavorite) {
+        //   document.querySelector('h2').innerHTML =
+//     `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}">!♡ remove ${dataDetail.id}</button>`;
+// } else {
+  //   document.querySelector('h2').innerHTML =
+  //     `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}">♡ add ${dataDetail.id}</button>`;
+  // }
+  
+
+  
+
+
+    
 /////////////////////////////////////////////////////////////////
-    }else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
+    }//else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
 
 
 

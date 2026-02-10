@@ -48,9 +48,6 @@ function logIn($emailogname, $password){
 // }
 
 
-
-
-
 // function updateUser($logname, $avatar){
 //    require_once("dbh.php");
 //    $id = $_SESSION['user_id'];
@@ -84,7 +81,7 @@ function updateUser($logname, $avatar) {
 
 
 
-function isFavorite($userId, $gameId){
+function checkIfFav($userId, $gameId){
     require_once("dbh.php");
 
     $query = "SELECT EXISTS (SELECT 1 FROM favorite WHERE user_id = ? AND game_id = ?) AS fav_exists";
