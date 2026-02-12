@@ -57,8 +57,6 @@ const loadGames = async () => {
       let parentPlatforms = 'Parent platforms unavailable';
       let releaseDate = 'Release date unavailable';
 
-      
-      
       if(game.tags !== null && game.tags !== undefined && game.tags.length > 0)
         tags = showArray(game.tags, 'tags');
     
@@ -82,7 +80,7 @@ const loadGames = async () => {
 
      //if(tags.length=== 0) alert(tags.length);
      //console.log(game.tags);
-      if ( ! tags.some(tag => tag === 50 || tag === 312 || tag === 786) && tags.length > 0) 
+      if ( ! tags.some(tag => tag === 50 || tag === 312 || tag === 786)) 
       
       //// CREATE THE ELEMENT TO DISPLAY ////
         item =

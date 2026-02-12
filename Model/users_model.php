@@ -96,9 +96,9 @@ function checkIfFav($userId, $gameId){
 
 
 function addFav($userId, $gameId){
-    require_once("dbh.php");
+   require_once("dbh.php");
   
-    $query = "INSERT INTO favorite (user_id, game_id) VALUES (?,?);";
+   $query = "INSERT INTO favorite (user_id, game_id) VALUES (?,?);";
    
    $stmt = $pdo->prepare($query);
 
@@ -111,4 +111,25 @@ function addFav($userId, $gameId){
 
    // Return success or failure
    return $result;
+}
+
+
+function removeFav($userId, $gameId){
+   require_once("dbh.php");
+  
+
+   //die('die');
+
+   $query = "DELETE FROM favorite WHERE user_id = ? AND game_id = ?";
+
+   $stmt = $pdo->prepare($query);
+
+   $stmt->execute([$userId, $gameId]);
+   $deletedRows = $stmt->rowCount();
+
+   // Close the connection and statement
+   $pdo = null;
+   $stmt = null;
+
+   return $deletedRows > 0;
 }

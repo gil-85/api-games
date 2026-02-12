@@ -70,6 +70,7 @@ function checkFavorite(spnUserId, dataDetailId){
         method: 'POST',
         body: formData,
       });
+
       if ( ! res.ok) throw new Error('Network response was not ok');
 
       const data = await res.json();  
@@ -80,41 +81,44 @@ function checkFavorite(spnUserId, dataDetailId){
       console.log('is fav = ' + isFavorite);
       console.log(isFavorite, typeof isFavorite);
 
-      let btnFav;
       let action;
       
+      document.querySelector('h2').innerHTML+= `<button id="toggle_fav"></button>`;
+      const btnFav= document.querySelector(`#toggle_fav`);
+
      if(isFavorite){
-      console.log('hihi');
-      document.querySelector('h2').innerHTML+= `<button id="remove_fav">:/remove</button>`;
-      btnFav= document.querySelector(`#remove_fav`);
-      action= `removeFav`;
-     } 
-     else{
-       console.log('dang');
-       document.querySelector('h2').innerHTML+=  `<button id="add_fav">:/add</button>`;
-       btnFav= document.querySelector(`#add_fav`);
+        action= `removeFav`;
+        btnFav.textContent= `Remove from favorite`;
+      }else{
        action= `addFav`;
-     } 
+       btnFav.textContent= `Add to favorite`;
+      } 
 
-
-      
     //// BUTTON TO ADD IN FAVORIES
+      ToggleFav(btnFav, action, spnUserId, dataDetailId);
       
-      btnFav.addEventListener(`click`, e=> {
+      return;
+    }catch (error) {
+      console.error('Error:', error);
+    }   
+  }
+  checkIfFav(formData);
+}
+
+function ToggleFav(btnFav, action, spnUserId, dataDetailId){
+  btnFav.addEventListener(`click`, e=> {
         const formData = new FormData();
         formData.append(`action`, action);
         formData.append(`user_id`, spnUserId);
         formData.append(`game_id`, dataDetailId);
         console.log(e.target.id);
 
-        //if ( ! isFavorite)
+
+        console.log(spnUserId, dataDetailId);
+        console.log(action);
+
         toggleFav(formData);
       })
-
-
-
-
-
       
       const toggleFav = async(formData) => {
         try {
@@ -125,35 +129,27 @@ function checkFavorite(spnUserId, dataDetailId){
 
           if ( ! res.ok) throw new Error('Network response was not ok');
         
-          const data = await res.json();  
+          const data = await res.json(); 
+
           if(data.response !== true){
             errorMessage.textContent = data.response;
-          
             console.log(data.response);
             return;
+          }    
+       
+          if(action=== `addFav`){
+            action= `removeFav`;
+            btnFav.textContent= `Remove from favorite`;
+          }else{
+            action= `addFav`
+            btnFav.textContent= `Add to favorite`;
           } 
+
         }catch (error) {
-            console.error('Error:', error);
+          console.error('Error:', error);
         }   
       }
-
-
-
-
-
-
-
-
-
-      return;
-    }catch (error) {
-      console.error('Error:', error);
-    }   
-  }
-  checkIfFav(formData);
 }
-
-
 
 //// FETCH GAME BY ID ////
 const loadGame = async () => {
@@ -179,13 +175,7 @@ const loadGame = async () => {
 // } else {
   //   document.querySelector('h2').innerHTML =
   //     `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}">♡ add ${dataDetail.id}</button>`;
-  // }
-  
-
-  
-
-
-    
+  // }  
 /////////////////////////////////////////////////////////////////
     }//else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
 
@@ -215,7 +205,6 @@ const loadGame = async () => {
 
   if(dataDetail.esrb !== null && dataDetail.esrb !== undefined && dataDetail.esrb.length > 0)
       esrb = dataDetail.esrb;
-    
     
   if(dataDetail.background_image_additional !== null && dataDetail.background_image_additional !== undefined && dataDetail.background_image_additional.length > 0)
        backgroundImageAdditional = `<img src="${dataDetail.background_image_additional}" alt="${dataDetail.name} image">`;  
