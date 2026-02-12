@@ -55,12 +55,12 @@ const showArray = (params, name, maxLength = 1000) => {
 
 
 
-function checkFavorite(spnUserId, dataDetailId){
+function checkFavorite(userId, dataDetailId){
   
   const formData = new FormData();
   let action= `checkIfFav`;
   formData.append(`action`, action);
-  formData.append(`user_id`, spnUserId);
+  formData.append(`user_id`, userId);
   formData.append(`game_id`, dataDetailId);
 
 
@@ -78,10 +78,7 @@ function checkFavorite(spnUserId, dataDetailId){
       
       isFavorite= data.response;
 
-      console.log('is fav = ' + isFavorite);
-      console.log(isFavorite, typeof isFavorite);
-
-      let action;
+      //let action;
       
       document.querySelector('h2').innerHTML+= `<button id="toggle_fav"></button>`;
       const btnFav= document.querySelector(`#toggle_fav`);
@@ -95,7 +92,7 @@ function checkFavorite(spnUserId, dataDetailId){
       } 
 
     //// BUTTON TO ADD IN FAVORIES
-      ToggleFav(btnFav, action, spnUserId, dataDetailId);
+      ToggleFav(btnFav, action, userId, dataDetailId);
       
       return;
     }catch (error) {
@@ -105,17 +102,13 @@ function checkFavorite(spnUserId, dataDetailId){
   checkIfFav(formData);
 }
 
-function ToggleFav(btnFav, action, spnUserId, dataDetailId){
+function ToggleFav(btnFav, action, userId, dataDetailId){
   btnFav.addEventListener(`click`, e=> {
         const formData = new FormData();
         formData.append(`action`, action);
-        formData.append(`user_id`, spnUserId);
+        formData.append(`user_id`, userId);
         formData.append(`game_id`, dataDetailId);
         console.log(e.target.id);
-
-
-        console.log(spnUserId, dataDetailId);
-        console.log(action);
 
         toggleFav(formData);
       })
@@ -163,9 +156,9 @@ const loadGame = async () => {
     //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
     if (settingsButton){
       document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
-      const spnUserId= document.querySelector(`#spn-user_id`).textContent;
+      const userId= document.querySelector(`#spn-user_id`).textContent;
       
-      checkFavorite(spnUserId, dataDetail.id);
+      checkFavorite(userId, dataDetail.id);
       
       
       

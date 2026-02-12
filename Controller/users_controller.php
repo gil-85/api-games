@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
     break;   
 
 
-
+//// CHECK IF A GAME IS FAVORIE TO SET THE TOGGLE BUTTON (ADD OR REMOVE)
     case 'checkIfFav' :
       
       $userId = $_POST['user_id'];
@@ -156,6 +156,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
      
       try{
         $result = removeFav($userId, $gameId);
+        
+        $data = array('response' => $result);
+        echo json_encode($data); 
+      }catch(Exception $e){
+        $data = array('response' => 'Error: ' . $e->getMessage());
+        echo json_encode($data); 
+      }
+
+    break; 
+
+     //// SEARCH FOR FAVORITE(S) FOR THE LINK IN INDEX
+    case 'searchFav' :
+
+      $userId = $_POST['user_id'];
+     
+      try{
+        $result = searchFav($userId);
         
         $data = array('response' => $result);
         echo json_encode($data); 

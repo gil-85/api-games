@@ -54,5 +54,44 @@ const presetLinks =
     <a href="View/list.php?title=Future%20releases&dates=${today},${future}">FUTURE RELEASES</a>
   `;
  
- document.querySelector('nav').insertAdjacentHTML(`afterbegin`, presetLinks);
+document.querySelector('nav').insertAdjacentHTML(`afterbegin`, presetLinks);
+
+  //  echo '
+  //       <a href="View/list.php" id="link_favories">FAVORIES</a> 
+  //       <button id="btn-disconnect">LOG OUT</button>
+//// GET THE FAVORITE GAMES ID IF ANY AND IF USER IS LOGGED IN
+  
+if (settingsButton){
+  const spnUserId= document.querySelector(`#spn-user_id`).textContent;
+  searchFavorite(spnUserId);
+}
+
+function searchFavorite(userId){
+  
+  const formData = new FormData();
+  let action= `searchFav`;
+  formData.append(`action`, action);
+  formData.append(`user_id`, userId);
+
+  const searchIfFav = async(formData) => {
+    try {
+      const res = await fetch('Controller/users_controller.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if ( ! res.ok) throw new Error('Network response was not ok');
+
+      const data = await res.json();  
+        
+      console.log(data.response);
+      
+      return;
+    }catch (error) {
+      console.error('Error:', error);
+    }   
+  }
+  searchIfFav(formData);
+}
+
  

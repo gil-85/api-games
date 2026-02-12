@@ -67,7 +67,7 @@ let genresPage = 1;
 let platformsHeight = 0;
 let genresHeight = 0;
 
-//// ARRAYS AND STRINGs TO GET THE RESEARCH PARAMETERS ////
+//// ARRAYS AND STRINGS TO GET THE RESEARCH PARAMETERS ////
 let aSelectedPlats = [];
 let aSelectedGenres = []; 
 let aSelectedTags = [];

@@ -117,11 +117,8 @@ function addFav($userId, $gameId){
 function removeFav($userId, $gameId){
    require_once("dbh.php");
   
-
-   //die('die');
-
-   $query = "DELETE FROM favorite WHERE user_id = ? AND game_id = ?";
-
+   $query = "DELETE FROM favorite WHERE user_id = ? AND game_id = ?;";
+   
    $stmt = $pdo->prepare($query);
 
    $stmt->execute([$userId, $gameId]);
@@ -130,6 +127,22 @@ function removeFav($userId, $gameId){
    // Close the connection and statement
    $pdo = null;
    $stmt = null;
-
+   
    return $deletedRows > 0;
 }
+   
+function searchFav($userId){
+   require_once("dbh.php");
+
+   $query = "SELECT game_id FROM favorite WHERE user_id = ?;";
+   $stmt = $pdo->prepare($query);
+   $stmt->execute([$userId]);
+
+   $games = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+   $stmt = null;
+   $pdo = null;
+
+   return $games;
+}
+
