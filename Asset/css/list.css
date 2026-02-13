@@ -1,13 +1,32 @@
-
-#content{
-
+/* #content {
   margin: .4em;
 
   display: grid;
+  gap: .6em .4em;
+
+  grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+  justify-content: center;
+
+  border: 2em solid red;
+} */
+
+
+
+ #content{
+
+  margin: .4em;
+
+  
+  display: grid;
   row-gap: .6em;
   column-gap: .4em;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
+  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  justify-content: center;
+
+  border: .3em solid #0000; 
+} 
+
+
 
 .item{
   height: 21em;

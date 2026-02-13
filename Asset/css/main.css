@@ -66,6 +66,8 @@ footer{
   width: 100%;
   max-height: 4em;
   background-color: var(--bkg-clr_00);
+
+  z-index: 1;
 }
 
 footer>p{

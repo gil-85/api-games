@@ -10,5 +10,5 @@ if (isset($_SESSION['email'])) {
 }
 ?>
 
-<input type="text" placeholder="LOG NAME" value="gil-dy" autocomplete="logname" maxlength="16" name="logname" value="<?= $lognameValue ?>" required>
+<input type="text" placeholder="LOG NAME" autocomplete="logname" maxlength="16" name="logname" value="<?= $lognameValue ?>" required>
 <button type="button" id="avatar">AVATAR<span class="avatarSet"><?=$avatarValue?></span></button>

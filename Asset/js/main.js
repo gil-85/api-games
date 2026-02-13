@@ -29,7 +29,7 @@ if(document.querySelector(`h2`).textContent !== `Home`)
 
 
   //// BUTTON EDIT USER IF CONNECTED AND NOT ON THE EDIT PAGE////
-  const settingsButton = document.querySelector(`#edit_user`);
+  const settingsButton = document.querySelector(`#btn-edit_user`);
   if (settingsButton) {
     if( ! currentURL.includes(`update`)){
       
@@ -52,5 +52,52 @@ if (theme !== null)
   if (theme === 'Light theme')
     document.body.classList.add('light-theme');
  
+
+
+//// DISPLAY THE AVATAR AND ITS BACKGROUND IF CONNECTED
+  if (settingsButton) {
+    //const strRawHeaderAvatar= document.querySelector(`#spn-raw_header_avatar`).textContent;
+    
+    const strHeaderAvatar = document.querySelector("#spn-header_avatar");
+
+    
+
+    console.log(strHeaderAvatar.textContent.length); 
+
+    //// TAKE THE HUE VALUE FROM THE AVATAR GET FROM THE DATABASE
+
+    // for(let i= 0; i< strHeaderAvatar.textContent.length; i++){
+    //   console.log(i + ' : ' + strHeaderAvatar.textContent.charAt(i));
+    // }
+
+
+    let strColor= strHeaderAvatar.textContent.charAt(7); 
+    
+    if (strHeaderAvatar.textContent.charAt(8) !== '-'){
+      strColor+= strHeaderAvatar.textContent.charAt(8);
+      if (strHeaderAvatar.textContent.charAt(9) !== '-') strColor+= strHeaderAvatar.textContent.charAt(9);
+    } 
+    console.log(strColor); 
+
+  
+  const bck_str = strHeaderAvatar.textContent.at(-1)=== '0' ? 0 : 100;
+ // console.log(bck_str);
+
+  strHeaderAvatar.style.backgroundImage = `
+    linear-gradient(
+      -225deg,
+      hsl(${strColor - 30}, ${bck_str}%, 95%),
+      hsl(${strColor}, ${bck_str}%, 50%),
+      hsl(${strColor + 30}, ${bck_str}%, 5%)
+    )
+  `;
+
+    //strHeaderAvatar.style.backgroundColor = `hsl(30, 100%, 50%)`;
+    //strHeaderAvatar.style.border= `.1em solid #f00`;
+
+    
+  }
+
+
 
 //console.log(`main.js`);
