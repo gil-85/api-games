@@ -14,6 +14,9 @@ urlParams.forEach((value, key) => {
   else title = value;
 });
 let params = aParam.join('&');
+console.log(params);
+
+
 
 //// FORMAT ARRAYS RESULTS ////
 const getStrTags = (tags) => { return tags.map(each => each.id); };

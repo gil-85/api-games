@@ -77,8 +77,6 @@ function checkFavorite(userId, dataDetailId){
         
       
       isFavorite= data.response;
-
-      //let action;
       
       document.querySelector('h2').innerHTML+= `<button id="toggle_fav"></button>`;
       const btnFav= document.querySelector(`#toggle_fav`);
@@ -250,47 +248,12 @@ const loadGame = async () => {
   content.insertAdjacentHTML(`beforeend`, item);
   eventToImgs();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   loadingElement.classList.add(`ninja`);
    
   }catch(err){
     alert(`ERROR : ${err}`);
   }
 }
-
-
-
 
 
 let pageSreens = 1;

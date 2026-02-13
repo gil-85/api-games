@@ -1,5 +1,4 @@
 const btnMode = document.querySelector('#btn-mode');
-const btnDisconnect = document.querySelector(`#btn-disconnect`);
 const linkFavories = document.querySelector('#link_favories')
 
 //// THEMES CONTROL ////
@@ -19,11 +18,11 @@ btnMode.addEventListener('click', () => {
 //// DISCONNECTION ////
 
 
-if (btnDisconnect) {
-    btnDisconnect.addEventListener('click', async () => {
-      if(confirm('Log out ?')) logout(); 
-  });
-}
+// if (btnDisconnect) {
+//     btnDisconnect.addEventListener('click', async () => {
+//       if(confirm('Log out ?')) logout(); 
+//   });
+// }
 
 ////
 const logout = async () => {
@@ -53,6 +52,8 @@ const presetLinks =
     <a href="View/list.php?title=Last%20releases&dates=${lastYear},${today}">LAST RELEASES</a>
     <a href="View/list.php?title=Future%20releases&dates=${today},${future}">FUTURE RELEASES</a>
   `;
+
+  
  
 document.querySelector('nav').insertAdjacentHTML(`afterbegin`, presetLinks);
 
@@ -65,7 +66,7 @@ if (settingsButton){
   const spnUserId= document.querySelector(`#spn-user_id`).textContent;
   searchFavorite(spnUserId);
 }
-
+// const arrFav= new Array();
 function searchFavorite(userId){
   
   const formData = new FormData();
@@ -84,8 +85,21 @@ function searchFavorite(userId){
 
       const data = await res.json();  
         
-      console.log(data.response);
+      const param= data.response;
+      console.log(param);
       
+      const presetLinks_1=`<a href="View/list.php?title=Favories&ids=${param}">FAVORIES</a> 
+                          <button id="btn-disconnect">LOG OUT</button>`;
+                         
+      document.querySelector('nav').insertAdjacentHTML(`beforeend`, presetLinks_1);
+
+      const btnDisconnect = document.querySelector(`#btn-disconnect`);
+
+      btnDisconnect.addEventListener('click', async () => {
+        if(confirm('Log out ?')) logout(); 
+      });
+
+
       return;
     }catch (error) {
       console.error('Error:', error);
@@ -94,4 +108,3 @@ function searchFavorite(userId){
   searchIfFav(formData);
 }
 
- 
