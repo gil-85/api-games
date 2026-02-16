@@ -1,6 +1,10 @@
 const textInput = document.querySelector(`input[type=text]`);
 const passwordInput = document.querySelector(`input[type=password]`);
 const errorMessage = document.querySelector(`#p-error_message`);
+
+let email = ``;
+let action =  ``;
+
 const formData = new FormData();
 
 document.querySelector(`form`).addEventListener(`submit`,(e)=>{
@@ -71,16 +75,90 @@ const isValidEmailogname = (emailogname) => {
 };
 
 
+const btnForgotPassword= document.querySelector(`#btn-forgot_password`);
+//btnForgotPassword.textContent = btnForgotPassword.textContent.split('').reverse().join('');
+
+btnForgotPassword.addEventListener('click', ()=>{
+
+   email= prompt(`Enter your email address`);
+   console.log(email);
+   
+   if( ! isValidEmail(email)){
+      errorMessage.textContent= `Email is invalid`;
+      return;
+   }
+
+   
+  action = 'sendCode';
+  formData.append('action', action);
+  formData.append('email', email);
+  sendCode(formData);
 
 
 
+});
+
+////  GO TO THE CONTROLLER WITH THE PARAMETERS TO CREATE A RANDOM CODE  ////
+const sendCode = async (formData) => {
+   try {
+      const res = await fetch('../Controller/users_controller.php', {
+         method: 'POST',
+         body: formData,
+      });
+      
+      if ( ! res.ok) throw new Error('Network response was not ok');
+      
+      const data = await res.json();
+
+      if(data.response.includes(`Error`)){
+         errorMessage.textContent= `Verification impossible, please try later`;
+         return;
+      } 
+      
+      
+      const code = data.response;
+      const typedCode = prompt(`Enter the code send to ${email}`);
+     
+
+      if (typedCode !== code) {
+         errorMessage.textContent= `Error : the codes don't match`;
+         return;
+      }
+      
+      createNewPassword();
+
+         // action = 'resetPassword';
+         // newPassword = CryptoJS.SHA256(newPassword).toString();
+
+         // formData.append('action', action);
+         // formData.append('password', newPassword);
+
+
+   } catch (error) {
+      console.error('Error:', error);
+   } 
+}  
 
 
 
+function createNewPassword(){
+   let newPassword;
+   let confirmNewPassword;
 
+   do {
+     newPassword = prompt("Enter a new password");
+     if (newPassword === null) return; // user pressed cancel
 
+     confirmNewPassword = prompt("Confirm the password");
+     if (confirmNewPassword === null) return;
 
+     if (newPassword !== confirmNewPassword) {
+       alert("Passwords don't match. Try again.");
+     }
 
+   } while (newPassword !== confirmNewPassword);
+
+}
 
 
 

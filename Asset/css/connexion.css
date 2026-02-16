@@ -85,10 +85,10 @@ form> button> span {
   
   background-image: linear-gradient(-225deg, hsl(330, 100%, 95%), hsl(0, 100%, 50%), hsl(30, 100%, 5%));
   text-shadow:
-    -2px 0px 0px var(--txt-clr_neg),
-    0px -2px 0px var(--txt-clr_neg),
-    2px 0px 0px var(--txt-clr_neg),
-    0px 2px 0px var(--txt-clr_neg)
+    -2px 0 0 var(--txt-clr_neg),
+    0 -2px 0 var(--txt-clr_neg),
+    2px 0 0 var(--txt-clr_neg),
+    0 2px 0 var(--txt-clr_neg)
     ;
 }
 
@@ -144,6 +144,43 @@ form> button> span {
     0px 2px 0px var(--txt-clr_neg)
     ;
 }
+/* display: flex;
+justify-content: flex-end;
+padding-right: 2em; */
+
+
+
+
+/* 
+#btn-forgot_password{
+  opacity: .5;
+  padding-right: 2em;
+  transform: rotateY(180deg);
+} */
+
+
+
+#btn-forgot_password {
+  position: relative;
+  transform: rotateY(180deg);
+  color: transparent; /* hide original text */
+  opacity: .5;
+}
+
+#btn-forgot_password::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: rotateY(180deg);
+  color: var(--txt-clr);
+  padding-right: 2em;
+}
+
+
+
+
+
 
 /*
 

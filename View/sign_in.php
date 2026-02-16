@@ -9,18 +9,40 @@
 
     $title = 'SIGN IN';
 
+    $lognameValue = '';
+    $avatarValue = '( -_- )';
+
+    if (isset($_SESSION['email'])) {
+      $lognameValue = $_SESSION['logname'];
+      $avatarValue = $_SESSION['avatar'];
+      $avatarValue = preg_replace('/\d.*$/', '', $avatarValue);
+    }
+
     include_once('Templates/header.php')
   ?>
   <h2>Sign in</h2>
   <div class="content-primary" id="content" exportparts="multipart/form-data">
-    <form action="../index.php" id="display_column">
-       <input type="email" placeholder="EMAIL" value="duplissy.gil@gmail.com" autocomplete="email" required>
-      <?php  include_once('Templates/form.php')?>
-      <input type="password" placeholder="PASSWORD" autocomplete="new-password" value="gilpass" required>
-      <input type="password" placeholder="CONFIRM PASSWORD" autocomplete="new-password" value="gilpass" required>
-
+    <form action="" class="display_column" id="form_credentials">
+      <input type="email" placeholder="EMAIL" value="" autocomplete="email" required>
+      
+      <input type="text" placeholder="LOG NAME" autocomplete="logname" maxlength="16" name="logname" value="<?= $lognameValue ?>" required>
+      <button type="button" id="avatar">AVATAR<span class="avatarSet"><?=$avatarValue?></span></button>
+      
+      <input type="password" placeholder="PASSWORD" autocomplete="new-password" value="" required>
+      <input type="password" placeholder="CONFIRM PASSWORD" autocomplete="new-password" value="" required>
+      
       <input type="submit" value="ENTER">
+    
     </form>
+    <!---->
+    <form action="" class="display_column" id="form_code">
+       
+      <input type="number" placeholder="TYPE THE CODE SEND TO YOUR EMAIL ADDRESS" name="typed_code">
+      <button type="submit" id="btn-test_code">VERIFY</button>
+
+    </form>
+    <!---->
+
     <div class="a-btn above-footer">
       <p>Already an account : <a href="log_in.php">Log in</a>
       </p>

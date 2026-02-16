@@ -56,7 +56,9 @@
       if (isset($_SESSION['user_id'])) {
         echo '<span class= ghost id= "spn-user_id">' .  $_SESSION['user_id'] . '</span>';
         //  echo '&emsp; _email: ' . $_SESSION['email'];
-        //echo '&emsp; <span class= ghost id="spn-raw_header_avatar">'. $_SESSION['avatar'] . '</span>';
+        //
+        
+        echo '&emsp; <span class= ghost id="spn-raw_header_avatar">'. $_SESSION['avatar'] . '</span>';
         echo '&emsp; <span id="spn-header_avatar">'. $_SESSION['avatar'] . '</span>';
         
       echo '&emsp;' . $_SESSION['logname'];

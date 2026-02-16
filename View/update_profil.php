@@ -13,7 +13,7 @@
   ?>
   <div class="content-primary" id="content" enctype="multipart/form-data">
     <h2>Update profil</h2>
-    <form action="../index.php" id="display_column">
+    <form action="../index.php" class="display_column">
      
       <?php  include_once('Templates/form.php')?>
 

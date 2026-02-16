@@ -21,9 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
           $rand = mt_rand(0, 9);
           $mess.= strval($rand);
         }
-       
+
+        //// SECURE WAY
+        $_SESSION['send_code'] = $mess;
+       //// SECURE WAY
+
         sendmail($email, $subject, $mess);
-        $data = array('response' => $mess);
+        $data = array('response' => $mess);//// to remove once set in session ok
         echo json_encode($data);
 
       } catch (Exception $e) {
@@ -170,6 +174,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
     case 'searchFav' :
 
       $userId = $_POST['user_id'];
+     
+      try{
+        $result = searchFav($userId);
+        
+        $data = array('response' => $result);
+        echo json_encode($data); 
+      }catch(Exception $e){
+        $data = array('response' => 'Error: ' . $e->getMessage());
+        echo json_encode($data); 
+      }
+
+    break; 
+
+
+         //// SEARCH FOR FAVORITE(S) FOR THE LINK IN INDEX
+    case 'resetPassword' :
+
+      $email = $_POST['email'];
+     die($email);
      
       try{
         $result = searchFav($userId);

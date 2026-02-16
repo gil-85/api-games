@@ -10,7 +10,7 @@
   ?>
   <h2>Home</h2>
   <div class="content-primary" id="content"> 
-    <nav id="display_column">
+    <nav class="display_column">
       <a href="View/research.php">RESEARCH</a>
       <button id="btn-mode">LIGHT THEME</button> 
       <?php

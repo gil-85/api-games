@@ -3,11 +3,19 @@ const aPassword = document.querySelectorAll(`input[type=password]`);
 let email = ``;
 let password =``;
 let action =  ``;
+let code= null;
+
+const formCredentials= document.querySelector(`#form_credentials`);
 
 
-document.querySelector(`form`).addEventListener(`submit`,(e)=>{
+
+formCredentials.addEventListener(`submit`,(e)=>{
   e.preventDefault();
-  
+ 
+ 
+ // e.currentTarget.classList.toggle('ghost');
+
+
   email = emailInput.value;
   password = aPassword[0].value;
   logname = lognameInput.value;
@@ -34,6 +42,8 @@ document.querySelector(`form`).addEventListener(`submit`,(e)=>{
   if (errorMessage.textContent === '') {
   //////////////////////////////////////////////////////////////////
 
+  e.currentTarget.style.display= 'none';
+  formCode.style.display= 'flex';
 
   action = 'sendCode';
   formData.append('action', action);
@@ -58,32 +68,30 @@ const sendCode = async (formData) => {
     
     const data = await res.json();
 
-    //console.log(data.response);  // needs to be removed of course :)
-
      if(data.response.includes(`Error`)){
         errorMessage.textContent= `Verification impossible, please try later`;
         return;
      } 
     
 
-    const code = data.response;
-    const typedCode = prompt(`Enter the code send to ${email}`);
+    code = data.response;
+   // const typedCode = prompt(`Enter the code send to ${email}`);
    
-    if(typedCode === code){
+    // if(typedCode === code){
 
-      action = 'signIn';
-      password = CryptoJS.SHA256(password).toString();
+    //   action = 'signIn';
+    //   password = CryptoJS.SHA256(password).toString();
       
-      let color = saturation === `0%` ? 0 : 1;
-      let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
+    //   let color = saturation === `0%` ? 0 : 1;
+    //   let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
       
-      formData.append('action', action);
-      formData.append('logname', logname);
-      formData.append('password', password);
-      formData.append('avatar', avatarAndBkg);
+    //   formData.append('action', action);
+    //   formData.append('logname', logname);
+    //   formData.append('password', password);
+    //   formData.append('avatar', avatarAndBkg);
       
-      signIn(formData);   
-    } else alert(`Error : the code doesn't match`);
+    //   signIn(formData);   
+    // } else alert(`Error : the code doesn't match`);
 
   } catch (error) {
     console.error('Error:', error);
@@ -147,8 +155,41 @@ const logIn = async (formData) => {
   
 }
 
-//// CHECK IF THE EMAIL IS VALID ////
-const isValidEmail = (email) => {
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return emailPattern.test(email);
-};
+
+//// INPUT TO TYPE THE CODE SEND BY MAIL
+const formCode= document.querySelector(`#form_code`);
+let codeInput= document.querySelector(`input[type=number]`);
+formCode.style.display = 'none';
+//const btnCodeInput= document.querySelector(`#btn-test_code`);
+
+formCode.addEventListener(`submit`,(e) => {
+  e.preventDefault();
+
+  alert(`btn test`);
+  if(codeInput.value=== code){
+
+      action = 'signIn';
+      password = CryptoJS.SHA256(password).toString();
+      
+      let color = saturation === `0%` ? 0 : 1;
+      let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
+      
+      formData.append('action', action);
+      formData.append('logname', logname);
+      formData.append('password', password);
+      formData.append('avatar', avatarAndBkg);
+      
+      signIn(formData);   
+    } else {
+      alert(`Error : the codes don't match`);
+      e.currentTarget.style.display= 'none';
+      formCredentials.style.display= 'flex';
+     errorMessage.textContent= `The codes don't match`;
+    }
+});
+
+// //// CHECK IF THE EMAIL IS VALID ////
+// const isValidEmail = (email) => {
+//   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//   return emailPattern.test(email);
+// };
