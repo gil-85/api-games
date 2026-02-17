@@ -1,7 +1,6 @@
 const currentURL = window.location.href;
 const header = document.querySelector('header');
 
-
 //// █ GET THE API KEY █ ////
 let apikey =``;
 const fetchKey = async (func) => {

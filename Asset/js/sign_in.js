@@ -7,6 +7,9 @@ let code= null;
 
 const formCredentials= document.querySelector(`#form_credentials`);
 
+const formCode= document.querySelector(`#form_code`);
+let codeInput= document.querySelector(`input[type=number]`);
+formCode.style.display = 'none';
 
 
 formCredentials.addEventListener(`submit`,(e)=>{
@@ -22,7 +25,7 @@ formCredentials.addEventListener(`submit`,(e)=>{
   errorMessage.textContent = ``;
   
   if( ! isValidEmail(email)){
-    errorMessage.textContent= `Email is invalid`;
+    errorMessage.textContent= `This email is invalid`;
     return;
   }
   
@@ -157,15 +160,11 @@ const logIn = async (formData) => {
 
 
 //// INPUT TO TYPE THE CODE SEND BY MAIL
-const formCode= document.querySelector(`#form_code`);
-let codeInput= document.querySelector(`input[type=number]`);
-formCode.style.display = 'none';
 //const btnCodeInput= document.querySelector(`#btn-test_code`);
 
 formCode.addEventListener(`submit`,(e) => {
   e.preventDefault();
 
-  alert(`btn test`);
   if(codeInput.value=== code){
 
       action = 'signIn';
@@ -181,9 +180,9 @@ formCode.addEventListener(`submit`,(e) => {
       
       signIn(formData);   
     } else {
-      alert(`Error : the codes don't match`);
       e.currentTarget.style.display= 'none';
       formCredentials.style.display= 'flex';
+      codeInput.value= ``;
      errorMessage.textContent= `The codes don't match`;
     }
 });

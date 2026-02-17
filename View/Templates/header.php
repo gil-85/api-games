@@ -29,7 +29,8 @@
       isset($signInJs) ? $signInJs : null,
       isset($updateProfilJs) ? $updateProfilJs : null,
       isset($logInJs) ? $logInJs : null,
-      isset($researchJs) ? $researchJs : null
+      isset($researchJs) ? $researchJs : null,
+      isset($passwordJs) ? $passwordJs : null
   ];
 
   foreach ($cssFiles as $cssFile) {
@@ -58,7 +59,7 @@
         //  echo '&emsp; _email: ' . $_SESSION['email'];
         //
         
-        echo '&emsp; <span class= ghost id="spn-raw_header_avatar">'. $_SESSION['avatar'] . '</span>';
+       // echo '&emsp; <span class= ghost id="spn-raw_header_avatar">'. $_SESSION['avatar'] . '</span>';
         echo '&emsp; <span id="spn-header_avatar">'. $_SESSION['avatar'] . '</span>';
         
       echo '&emsp;' . $_SESSION['logname'];

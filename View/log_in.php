@@ -12,22 +12,34 @@
   ?>
   <h2>Log in</h2>
   <div class="content-primary" id="content">
-    <form action="../index.php" class="display_column">
-      <input type="text" placeholder="EMAIL OR LOGNAME" autocomplete="email" required>
+    <form action="../index.php" class="display_column" id="form_credentials">
+      
+    <input type="text" placeholder="EMAIL OR LOGNAME" autocomplete="email" id="email_logname" required>
       <input type="password" placeholder="PASSWORD" autocomplete="current-password" required>
       <input type="submit" value="ENTER">
       <!-- <button type="button" id="btn-forgot_password">FORGOT PASSWORD</button> -->
-      <button id="btn-forgot_password" data-text="FORGOT PASSWORD">
+      <button type="button" id="btn-forgot_password" data-text="FORGOT PASSWORD">
         FORGOT PASSWORD
       </button>
-         <!-- .-->
-
-      <input type="number" placeholder="TYPE CODE SEND TO YOUR EMAIL ADDRESS" name="typed_code">
-      <button type="button" id="btn-test_code">VERIFY</button>
-       <!---->
+        
     </form>
 
+     <!---->
+    <form action="" class="display_column" id="form_email_to_code">
+      <input type="text" placeholder="ENTER YOUR EMAIL TO RECEIVE A CODE" autocomplete="email" id="email" required>
+      <input type="submit" value="ENTER">
+    </form>
+    <!---->
 
+    <!---->
+    <form action="password_recovery.php" method="POST" class="display_column" id="form_code">
+      <!-- TO GET THE EMAIL FROM THE FORM ABOV E-->
+      <input type="hidden" name="email" id="hidden_email">
+      <!---->
+      <input type="number" placeholder="CHECK YOUR EMAIL AND ENTER THE CODE" name="typed_code">
+      <button type="submit" id="btn-test_code">VERIFY</button>
+    </form>
+    <!---->
   
 
    

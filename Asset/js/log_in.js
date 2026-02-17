@@ -1,4 +1,4 @@
-const textInput = document.querySelector(`input[type=text]`);
+const textInput = document.querySelector(`#email_logname`);
 const passwordInput = document.querySelector(`input[type=password]`);
 const errorMessage = document.querySelector(`#p-error_message`);
 
@@ -7,7 +7,9 @@ let action =  ``;
 
 const formData = new FormData();
 
-document.querySelector(`form`).addEventListener(`submit`,(e)=>{
+const formCredentials= document.querySelector(`#form_credentials`);
+
+formCredentials.addEventListener(`submit`,(e)=>{
    e.preventDefault();
    
    emailogname = textInput.value;
@@ -75,28 +77,50 @@ const isValidEmailogname = (emailogname) => {
 };
 
 
+
+const formEmailToCode= document.querySelector(`#form_email_to_code`);
+const formCode= document.querySelector(`#form_code`);
+const emailInput= document.querySelector(`#email`);
+
+
+let codeInput= document.querySelector(`input[type=number]`);
+formEmailToCode.style.display = 'none';
+formCode.style.display = 'none';
+let code= null;
+
 const btnForgotPassword= document.querySelector(`#btn-forgot_password`);
 //btnForgotPassword.textContent = btnForgotPassword.textContent.split('').reverse().join('');
 
 btnForgotPassword.addEventListener('click', ()=>{
 
-   email= prompt(`Enter your email address`);
-   console.log(email);
-   
-   if( ! isValidEmail(email)){
-      errorMessage.textContent= `Email is invalid`;
+   formCredentials.style.display = 'none';
+   formEmailToCode.style.display = 'flex';
+});
+
+
+formEmailToCode.addEventListener(`submit`,(e)=>{
+   e.preventDefault();
+
+   const email= emailInput.value;
+
+     if( ! isValidEmail(email)){
+      errorMessage.textContent= `This email is invalid`;
       return;
    }
+   document.querySelector(`#hidden_email`).value= email;
 
+   formEmailToCode.style.display = 'none';
+   formCode.style.display = 'flex';
    
-  action = 'sendCode';
-  formData.append('action', action);
-  formData.append('email', email);
-  sendCode(formData);
-
-
+   action = 'sendCode';
+   formData.append('action', action);
+   formData.append('email', email);
+   sendCode(formData);
 
 });
+
+
+
 
 ////  GO TO THE CONTROLLER WITH THE PARAMETERS TO CREATE A RANDOM CODE  ////
 const sendCode = async (formData) => {
@@ -117,15 +141,14 @@ const sendCode = async (formData) => {
       
       
       const code = data.response;
-      const typedCode = prompt(`Enter the code send to ${email}`);
+      // const typedCode = prompt(`Enter the code send to ${email}`);
      
 
-      if (typedCode !== code) {
-         errorMessage.textContent= `Error : the codes don't match`;
-         return;
-      }
+      // if (typedCode !== code) {
+      //    errorMessage.textContent= `Error : the codes don't match`;
+      //    return;
+      // }
       
-      createNewPassword();
 
          // action = 'resetPassword';
          // newPassword = CryptoJS.SHA256(newPassword).toString();
@@ -137,28 +160,24 @@ const sendCode = async (formData) => {
    } catch (error) {
       console.error('Error:', error);
    } 
-}  
-
-
-
-function createNewPassword(){
-   let newPassword;
-   let confirmNewPassword;
-
-   do {
-     newPassword = prompt("Enter a new password");
-     if (newPassword === null) return; // user pressed cancel
-
-     confirmNewPassword = prompt("Confirm the password");
-     if (confirmNewPassword === null) return;
-
-     if (newPassword !== confirmNewPassword) {
-       alert("Passwords don't match. Try again.");
-     }
-
-   } while (newPassword !== confirmNewPassword);
-
 }
+
+
+//// INPUT TO TYPE THE CODE SEND BY MAIL
+
+// formCode.addEventListener(`submit`,(e) => {
+//   e.preventDefault();
+
+//   if(codeInput.value=== code){
+
+     
+//     } else {
+//       e.currentTarget.style.display= 'none';
+//       formCredentials.style.display= 'flex';
+//       codeInput.value= ``;
+//      errorMessage.textContent= `The codes don't match`;
+//     }
+// });
 
 
 

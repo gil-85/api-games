@@ -11,7 +11,7 @@
   ?>
   <h2>Research</h2>
   <div class="content-primary" id="content">
-    <form action="list.html" id="display_column">
+    <form action="list.html" class="display_column">
      
       <input type="text" class="switch" id="name" placeholder="NAME">
       

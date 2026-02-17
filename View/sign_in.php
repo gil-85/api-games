@@ -37,7 +37,7 @@
     <!---->
     <form action="" class="display_column" id="form_code">
        
-      <input type="number" placeholder="TYPE THE CODE SEND TO YOUR EMAIL ADDRESS" name="typed_code">
+      <input type="number" placeholder="TYPE THE CODE SENT TO YOUR EMAIL ADDRESS" name="typed_code">
       <button type="submit" id="btn-test_code">VERIFY</button>
 
     </form>

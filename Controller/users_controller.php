@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
         }
 
         //// SECURE WAY
-        $_SESSION['send_code'] = $mess;
+        $_SESSION['sent_code'] = $mess;
        //// SECURE WAY
-
+      
         sendmail($email, $subject, $mess);
         $data = array('response' => $mess);//// to remove once set in session ok
         echo json_encode($data);
