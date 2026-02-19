@@ -35,7 +35,6 @@ formCredentials.addEventListener(`submit`,(e)=>{
    }
    
    return;
-   
 });
 
 const logIn = async (formData) => {

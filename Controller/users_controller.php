@@ -25,6 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
         //// SECURE WAY
         $_SESSION['sent_code'] = $mess;
        //// SECURE WAY
+
+       //// for dev test
+      // $fakeCode= 10;
+      // $_SESSION['sent_code'] = $fakeCode;
+       //////////////////////
       
         sendmail($email, $subject, $mess);
         $data = array('response' => $mess);//// to remove once set in session ok
@@ -81,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
           $_SESSION['avatar'] = $user['avatar'];
           $data = array('response' => true);
         }else{
-          $data = array('response' => 'User not found');
+          $data = array('response' => 'Wrong credentials');
         }
       
         echo json_encode($data); 
@@ -188,14 +193,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
     break; 
 
 
-         //// SEARCH FOR FAVORITE(S) FOR THE LINK IN INDEX
-    case 'resetPassword' :
+    case 'updatePassword' :
 
       $email = $_POST['email'];
-     die($email);
+      $newPass = $_POST['newPass'];
      
       try{
-        $result = searchFav($userId);
+        $result = updatePassword($newPass, $email);
         
         $data = array('response' => $result);
         echo json_encode($data); 

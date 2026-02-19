@@ -12,22 +12,23 @@ $title = 'PASSWORD RECOVERY';
 include_once('Templates/header.php');
 
 
+if ( ! isset($_SESSION['sent_code']) || ! isset($_POST['typed_code'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+if ($_POST['typed_code'] != $_SESSION['sent_code']) {
+  header("Location: ../index.php");
+  exit();
+}
+
+  unset($_SESSION['sent_code']);   
 
 
-// if ( ! isset($_SESSION['sent_code']) || ! isset($_POST['typed_code'])) {
-//   header("Location: ../index.php");
-//   exit();
-// }
-
-// if ($_POST['typed_code'] != $_SESSION['sent_code']) {
-//   header("Location: ../index.php");
-//   exit();
-// }
-
-//   unset($_SESSION['sent_code']);
-
-  //echo $_POST['email'];
-  echo '<span class="ghost" id="spn-email">'. $_POST['email'] . '</span>';
+ 
+  echo '<span id="spn-email">'. $_POST['email'] . '</span>';
+ 
+ 
 ?>
   <h2>Password recovery</h2>
   <div class="content-primary" id="content">

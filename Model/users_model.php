@@ -36,30 +36,6 @@ function logIn($emailogname, $password){
    return $user;
 }
 
-// function logIn($email){
-//    require_once("dbh.php");
-//    $query = "SELECT user_id, email, logname, avatar FROM users WHERE email = ?;";
-//    $stmt = $pdo->prepare($query);
-//    $stmt->execute([$email]);
-//    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-//    $pdo = null;
-//    $stmt = null;
-//    return $user;
-// }
-
-
-// function updateUser($logname, $avatar){
-//    require_once("dbh.php");
-//    $id = $_SESSION['user_id'];
-
-//    $query = "UPDATE users SET logname=?, avatar=? WHERE user_id=?";
-//    $stmt = $pdo->prepare($query);
-//    $stmt->execute([$logname, $avatar, $id]);
-//    $pdo = null;
-//    $stmt = null;
-//    return null;
-// }
-
 function updateUser($logname, $avatar) {
    require_once("dbh.php");
    $id = $_SESSION['user_id'];
@@ -145,4 +121,22 @@ function searchFav($userId){
 
    return $games;
 }
+
+
+function updatePassword($newPass, $email): bool {
+   require_once("dbh.php");
+
+   $query = "UPDATE users SET password= ? WHERE email= ?";
+   $stmt = $pdo->prepare($query);
+
+   // Check if the query was executed successfully
+   $stmt->execute([$newPass, $email]);
+   // Close the connection and statement
+   $pdo = null;
+   
+   // Return success or failure
+   return $stmt->rowCount() > 0;
+}
+
+
 
