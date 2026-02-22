@@ -6,7 +6,7 @@ let email = ``;
 let action =  ``;
 
 const formData = new FormData();
-
+document.querySelector(`body`).style.backgroundColor= `#000`;
 const formCredentials= document.querySelector(`#form_credentials`);
 
 formCredentials.addEventListener(`submit`,(e)=>{
@@ -39,7 +39,6 @@ formCredentials.addEventListener(`submit`,(e)=>{
 
 const logIn = async (formData) => {
    try {
-      
       const res = await fetch('../Controller/users_controller.php', {
          method: 'POST',
          body: formData,
@@ -85,7 +84,7 @@ const emailInput= document.querySelector(`#email`);
 let codeInput= document.querySelector(`input[type=number]`);
 formEmailToCode.style.display = 'none';
 formCode.style.display = 'none';
-let code= null;
+//let code= null;
 
 const btnForgotPassword= document.querySelector(`#btn-forgot_password`);
 //btnForgotPassword.textContent = btnForgotPassword.textContent.split('').reverse().join('');
@@ -115,10 +114,7 @@ formEmailToCode.addEventListener(`submit`,(e)=>{
    formData.append('action', action);
    formData.append('email', email);
    sendCode(formData);
-
 });
-
-
 
 
 ////  GO TO THE CONTROLLER WITH THE PARAMETERS TO CREATE A RANDOM CODE  ////
@@ -132,51 +128,16 @@ const sendCode = async (formData) => {
       if ( ! res.ok) throw new Error('Network response was not ok');
       
       const data = await res.json();
-
-      if(data.response.includes(`Error`)){
+      console.log(data);
+      if(data.response=== false){
          errorMessage.textContent= `Verification impossible, please try later`;
          return;
       } 
-      
-      
-      const code = data.response;
-      // const typedCode = prompt(`Enter the code send to ${email}`);
-     
-
-      // if (typedCode !== code) {
-      //    errorMessage.textContent= `Error : the codes don't match`;
-      //    return;
-      // }
-      
-
-         // action = 'resetPassword';
-         // newPassword = CryptoJS.SHA256(newPassword).toString();
-
-         // formData.append('action', action);
-         // formData.append('password', newPassword);
-
 
    } catch (error) {
       console.error('Error:', error);
    } 
 }
-
-
-//// INPUT TO TYPE THE CODE SEND BY MAIL
-
-// formCode.addEventListener(`submit`,(e) => {
-//   e.preventDefault();
-
-//   if(codeInput.value=== code){
-
-     
-//     } else {
-//       e.currentTarget.style.display= 'none';
-//       formCredentials.style.display= 'flex';
-//       codeInput.value= ``;
-//      errorMessage.textContent= `The codes don't match`;
-//     }
-// });
 
 
 

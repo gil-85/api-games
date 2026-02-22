@@ -8,7 +8,7 @@
 
     $title = 'LOG IN';
 
-    include_once('Templates/header.php')
+    include_once('Templates/header.php');
   ?>
   <h2>Log in</h2>
   <div class="content-primary" id="content">
@@ -33,7 +33,7 @@
 
     <!---->
     <form action="password_recovery.php" method="POST" class="display_column" id="form_code">
-      <!-- TO GET THE EMAIL FROM THE FORM ABOV E-->
+      <!-- TO GET THE EMAIL FROM THE FORM ABOVE-->
       <input type="hidden" name="email" id="hidden_email">
       <!---->
       <input type="number" placeholder="CHECK YOUR EMAIL AND ENTER THE CODE" name="typed_code">

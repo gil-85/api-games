@@ -2,7 +2,7 @@
 $mainCss = '../Asset/css/main.css';
 $connexionCss = '../Asset/css/connexion.css';
 
-$passwordJs = '../Asset/js/password.js';
+$passwordRecoveryJs = '../Asset/js/password_recovery.js';
 $mainJs = '../Asset/js/main.js';
 $cryptoJS = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
 
@@ -10,7 +10,6 @@ $cryptoJS = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.mi
 $title = 'PASSWORD RECOVERY';
 
 include_once('Templates/header.php');
-
 
 if ( ! isset($_SESSION['sent_code']) || ! isset($_POST['typed_code'])) {
   header("Location: ../index.php");

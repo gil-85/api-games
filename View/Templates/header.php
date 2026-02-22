@@ -19,7 +19,7 @@
   $jsFiles = [
       isset($cryptoJS) ? $cryptoJS: null,
      
-      isset($indexMainJs) ? $indexMainJs: null,
+      isset($indexMainJs) ? $indexMainJs: null,  // ???
       isset($mainJs) ? $mainJs: null,
 
       isset($indexJs) ? $indexJs : null,
@@ -30,7 +30,8 @@
       isset($updateProfilJs) ? $updateProfilJs : null,
       isset($logInJs) ? $logInJs : null,
       isset($researchJs) ? $researchJs : null,
-      isset($passwordJs) ? $passwordJs : null
+      isset($passwordRecoveryJs) ? $passwordRecoveryJs : null,
+      isset($signCodeJs) ? $signCodeJs : null
   ];
 
   foreach ($cssFiles as $cssFile) {

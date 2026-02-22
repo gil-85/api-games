@@ -23,21 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
         }
 
         //// SECURE WAY
-        $_SESSION['sent_code'] = $mess;
+       // $_SESSION['sent_code'] = $mess;
        //// SECURE WAY
 
        //// for dev test
-      // $fakeCode= 10;
-      // $_SESSION['sent_code'] = $fakeCode;
+        $fakeCode= 10;
+        $_SESSION['sent_code'] = $fakeCode;
        //////////////////////
       
-        sendmail($email, $subject, $mess);
-        $data = array('response' => $mess);//// to remove once set in session ok
-        echo json_encode($data);
-
-      } catch (Exception $e) {
+        $result= sendmail($email, $subject, $mess);
+        $data = array('response' => $result);
+        echo json_encode($data); 
+      }catch(Exception $e){
         $data = array('response' => 'Error: ' . $e->getMessage());
-        echo json_encode($data);
+        echo json_encode($data); 
       }
 
     break;  

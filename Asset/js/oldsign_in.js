@@ -1,21 +1,15 @@
 const emailInput = document.querySelector(`input[type=email]`);
 const aPassword = document.querySelectorAll(`input[type=password]`);
-let avatarInput= document.querySelector(`#avatar`);
 let email = ``;
 let password =``;
-let avatar= ``
 let action =  ``;
+let code= null;
 
 const formCredentials= document.querySelector(`#form_credentials`);
 
 const formCode= document.querySelector(`#form_code`);
 let codeInput= document.querySelector(`input[type=number]`);
 formCode.style.display = 'none';
-
-if (sessionStorage.getItem("errorMessage")) {
-  errorMessage.textContent = sessionStorage.getItem("errorMessage");
-  sessionStorage.removeItem("errorMessage");
-}
 
 
 formCredentials.addEventListener(`submit`,(e)=>{
@@ -28,12 +22,7 @@ formCredentials.addEventListener(`submit`,(e)=>{
   email = emailInput.value;
   password = aPassword[0].value;
   logname = lognameInput.value;
-  avatar= avatarInput.value;
-
   errorMessage.textContent = ``;
-
-
-
   
   if( ! isValidEmail(email)){
     errorMessage.textContent= `This email is invalid`;
@@ -53,14 +42,6 @@ formCredentials.addEventListener(`submit`,(e)=>{
   
   if (errorMessage.textContent === '') {
   //////////////////////////////////////////////////////////////////
-
-  let color = saturation === `0%` ? 0 : 1;
-  let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
-
-    document.querySelector(`#hidden_email`).value= email;
-    document.querySelector(`#hidden_logname`).value= logname;
-    document.querySelector(`#hidden_avatar`).value= avatarAndBkg;
-    document.querySelector(`#hidden_password`).value= password;
 
   e.currentTarget.style.display= 'none';
   formCode.style.display= 'flex';
@@ -88,12 +69,13 @@ const sendCode = async (formData) => {
     
     const data = await res.json();
 
-      if(data.response=== false){
+     if(data.response.includes(`Error`)){
         errorMessage.textContent= `Verification impossible, please try later`;
         return;
-      } 
+     } 
     
-    // code = data.response;
+
+    code = data.response;
    // const typedCode = prompt(`Enter the code send to ${email}`);
    
     // if(typedCode === code){
@@ -119,96 +101,89 @@ const sendCode = async (formData) => {
 ///////////////////////////////////////////////
 
 
-// ////  GO TO THE CONTROLLER WITH THE PARAMETERS TO SIGN IN ////
-// const signIn = async (formData) => {
+////  GO TO THE CONTROLLER WITH THE PARAMETERS TO SIGN IN ////
+const signIn = async (formData) => {
 
-//   try {
-//     const res = await fetch('../Controller/users_controller.php', {
-//       method: 'POST',
-//       body: formData,
-//     });
-//     //console.log(res);
-//     if ( ! res.ok) throw new Error('Network response was not ok');
+  try {
+    const res = await fetch('../Controller/users_controller.php', {
+      method: 'POST',
+      body: formData,
+    });
+    //console.log(res);
+    if ( ! res.ok) throw new Error('Network response was not ok');
 
-//     const data = await res.json();
+    const data = await res.json();
 
-//     if(data.response !== true){
-//       errorMessage.textContent = data.response;
-//       //////////////////////
+    if(data.response !== true){
+      errorMessage.textContent = data.response;
+      //////////////////////
 
-//     if(data.response.includes(`1062`) && data.response.includes(`emai`) )
-//       errorMessage.textContent = `This email is already registered`;
+    if(data.response.includes(`1062`) && data.response.includes(`emai`) )
+      errorMessage.textContent = `This email is already registered`;
 
-//     if(data.response.includes(`1062`) && data.response.includes(`logname`) )
-//       errorMessage.textContent = `This logname is already taken`;
+    if(data.response.includes(`1062`) && data.response.includes(`logname`) )
+      errorMessage.textContent = `This logname is already taken`;
 
-//       //////////////////////
-//       console.log(data.response);
-//       return;
-//     }
+      //////////////////////
+      console.log(data.response);
+      return;
+    }
 
-//      action = 'logIn';
-//      formData.append('action', action);
-//      logIn(formData);
+     action = 'logIn';
+     formData.append('action', action);
+     logIn(formData);
 
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }   
-// }
+  } catch (error) {
+    console.error('Error:', error);
+  }   
+}
 
 
 
-// const logIn = async (formData) => {
+const logIn = async (formData) => {
 
-//   try {
+  try {
      
-//    const res = await fetch('../Controller/users_controller.php', {
-//       method: 'POST',
-//       body: formData,
-//    });
-//    if ( ! res.ok) throw new Error('Network response was not ok');
-//     window.location = '../index.php';
-//   }catch (error) {
-//     console.error('Error:', error);
-//   }
+   const res = await fetch('../Controller/users_controller.php', {
+      method: 'POST',
+      body: formData,
+   });
+   if ( ! res.ok) throw new Error('Network response was not ok');
+    window.location = '../index.php';
+  }catch (error) {
+    console.error('Error:', error);
+  }
   
-// }
+}
 
 
 //// INPUT TO TYPE THE CODE SEND BY MAIL
+//const btnCodeInput= document.querySelector(`#btn-test_code`);
 
+formCode.addEventListener(`submit`,(e) => {
+  e.preventDefault();
 
-// formCode.addEventListener(`submit`,(e) => {
-//   e.preventDefault();
+  if(codeInput.value=== code){
 
-//   if(codeInput.value=== code){
-
-//       action = 'signIn';
-//       password = CryptoJS.SHA256(password).toString();
+      action = 'signIn';
+      password = CryptoJS.SHA256(password).toString();
       
-//       let color = saturation === `0%` ? 0 : 1;
-//       let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
+      let color = saturation === `0%` ? 0 : 1;
+      let avatarAndBkg = avatarSet.textContent + bkg_clr + '-' + color;
       
-//       formData.append('action', action);
-//       formData.append('logname', logname);
-//       formData.append('password', password);
-//       formData.append('avatar', avatarAndBkg);
+      formData.append('action', action);
+      formData.append('logname', logname);
+      formData.append('password', password);
+      formData.append('avatar', avatarAndBkg);
       
-//       signIn(formData);   
-//     } else {
-//       e.currentTarget.style.display= 'none';
-//       formCredentials.style.display= 'flex';
-//       codeInput.value= ``;
-//      errorMessage.textContent= `The codes don't match`;
-//     }
-// });
-
-
-
-
-
-
-
+      signIn(formData);   
+    } else {
+      e.currentTarget.style.display= 'none';
+      formCredentials.style.display= 'flex';
+      codeInput.value= ``;
+     errorMessage.textContent= `The codes don't match`;
+    }
+});
 
 // //// CHECK IF THE EMAIL IS VALID ////
 // const isValidEmail = (email) => {
