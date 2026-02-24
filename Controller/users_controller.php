@@ -23,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["action"])) {
         }
 
         //// SECURE WAY
-       // $_SESSION['sent_code'] = $mess;
+       $_SESSION['sent_code'] = $mess;
        //// SECURE WAY
 
        //// for dev test
-        $fakeCode= 10;
-        $_SESSION['sent_code'] = $fakeCode;
+        //$fakeCode= 10;
+        //$_SESSION['sent_code'] = $fakeCode;
        //////////////////////
       
         $result= sendmail($email, $subject, $mess);

@@ -92,5 +92,11 @@ const isValidEmail = (email) => {
   return emailPattern.test(email);
 };
 
+//// CHECK IF THE PASSWORD IS VALID ////
+const isValidPassword = (password) =>{
+  const passwordPattern =   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()[\]{}\-_=+\\|;:'",.<>/?`~]).{8,20}$/;
+  return passwordPattern.test(password);
+};
+
 
 //console.log(`main.js`);

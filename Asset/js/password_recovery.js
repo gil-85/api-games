@@ -3,7 +3,7 @@ const newPassInput= document.querySelector(`#new_password`);
 const confNewPassInput= document.querySelector(`#confirm_new_password`);
 const errorMessage = document.querySelector(`#p-error_message`);
 const email= document.querySelector(`#spn-email`).textContent;
-// console.log(email);
+console.log(email);
 let newPass= ``;
 let action =  ``;
 
@@ -17,11 +17,16 @@ form.addEventListener(`submit`, e=>{
   
   newPass= newPassInput.value;
 
+  if( ! isValidPassword(newPass)){
+     errorMessage.textContent= `Weak password. Use 8–20 characters with upper & lowercase letters, a number, and a special character`;
+    return;
+  }
+  
   if (newPass !== confNewPassInput.value){
     errorMessage.textContent= `The passwords don't match`;
     return; 
   }
-  
+
   //// add password complexity to do
 
   action= `updatePassword`;  

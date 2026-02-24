@@ -1,11 +1,11 @@
-let email = ``;
-let password =``;
-let avatar= ``;
-let action =  ``;
 
 const emailInput = document.querySelector(`input[type=email]`);
 const aPassword = document.querySelectorAll(`input[type=password]`);
 let avatarInput= document.querySelector(`#avatar`);
+let email = ``;
+let password =``;
+let avatar= ``;
+let action =  ``;
 
 const formCredentials= document.querySelector(`#form_credentials`);
 
@@ -22,8 +22,6 @@ if (sessionStorage.getItem("errorMessage")) {
 formCredentials.addEventListener(`submit`,(e)=>{
   e.preventDefault();
  
- // e.currentTarget.classList.toggle('ghost');
-
   email = emailInput.value;
   password = aPassword[0].value;
   logname = lognameInput.value;
@@ -39,6 +37,11 @@ formCredentials.addEventListener(`submit`,(e)=>{
   
   if( ! isValidLogName(logname)){
     errorMessage.textContent= `The logname can only have letters, numbers, hyphens or underscores an name must be between 4 and 16 characters`;
+    return;
+  }
+
+  if( ! isValidPassword(password)){
+     errorMessage.textContent= `Weak password. Use 8–20 characters with upper & lowercase letters, a number, and a special character`;
     return;
   }
   
@@ -117,7 +120,7 @@ const signIn = async (formData) => {
       method: 'POST',
       body: formData,
     });
-    //console.log(res);
+
     if ( ! res.ok) throw new Error('Network response was not ok');
 
     const data = await res.json();
@@ -128,16 +131,10 @@ const signIn = async (formData) => {
 
     if(data.response.includes(`1062`) && data.response.includes(`emai`) )
       errorMessage.textContent = `This email is already registered`;
-     // alert(`This email is already registered`);
     
     if(data.response.includes(`1062`) && data.response.includes(`logname`) )
-      //sessionStorage.setItem("errorMessage", "This logname is already taken");
       errorMessage.textContent = `This logname is already taken`;
-      //alert(`This logname is already taken`);
       //////////////////////
-     //console.log(data.response);
-
-     // window.location = 'sign_in.php';
       return;
     }
 

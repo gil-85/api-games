@@ -2,9 +2,9 @@
 $mainCss = '../Asset/css/main.css';
 $connexionCss = '../Asset/css/connexion.css';
 
-$passwordRecoveryJs = '../Asset/js/password_recovery.js';
 $mainJs = '../Asset/js/main.js';
 $cryptoJS = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+$passwordRecoveryJs = '../Asset/js/password_recovery.js';
 
 
 $title = 'PASSWORD RECOVERY';
@@ -21,7 +21,7 @@ if ($_POST['typed_code'] != $_SESSION['sent_code']) {
   exit();
 }
 
-  unset($_SESSION['sent_code']);   
+  //unset($_SESSION['sent_code']);   
 
 
  
