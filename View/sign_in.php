@@ -12,6 +12,7 @@
     $lognameValue = '';
     $avatarValue = '( -_- )';
 
+//// FOR PROFIL EDITING (ALREADY CONNECTED THEN)
     if (isset($_SESSION['email'])) {
       $lognameValue = $_SESSION['logname'];
       $avatarValue = $_SESSION['avatar'];
@@ -19,7 +20,8 @@
     }
 
     include_once('Templates/header.php');
-  ?>
+?> 
+
   <h2>Sign in</h2>
   <div class="content-primary" id="content" exportparts="multipart/form-data">
     <form action="" class="display_column" id="form_credentials">
@@ -35,14 +37,14 @@
     
     </form>
     <!---->
-    <form action="sign_code.php" method="POST" class="display_column" id="form_code">
+    <form action="" method="POST" class="display_column" id="form_code">
       <!-- TO GET THE EMAIL FROM THE FORM ABOVE  need to add the other values-->
       <input type="hidden" name="email" id="hidden_email">
       <input type="hidden" name="logname" id="hidden_logname">
       <input type="hidden" name="avatar" id="hidden_avatar">
       <input type="hidden" name="password" id="hidden_password">
       <!---->
-      <input type="number" placeholder="CHECK YOUR EMAIL AND ENTER THE CODE" value="10" name="typed_code">
+      <input type="number" placeholder="CHECK YOUR EMAIL AND ENTER THE CODE" value="" name="typed_code">
       <button type="submit" id="btn-test_code">VERIFY</button>
 
     </form>
@@ -53,27 +55,33 @@
       </p>
     </div>
    <p id="p-error_message"></p>
-<!-- CASE IF THE CODE SENT AND THE TYPED CODE DON'T MATCH -->
-    <?php if (isset($_SESSION['errorMessage'])): ?>
-    <script>
-        document.getElementById("p-error_message").textContent = 
-            <?php echo json_encode($_SESSION['errorMessage']); ?>;
-    </script>
-    <?php unset($_SESSION['errorMessage']); ?>
-    <?php endif; ?>
-    
+<!-- CASE IF THE CODE SENT AND THE TYPED CODE DON'T MATCH --> 
   </div>
-
-     
-
-  <?php
-    include_once('Templates/avatar_selection.php')
-  ?>
-
-
-  <!-- footer -->
-  <?php
-    include_once('Templates/footer.php')
-  ?>
 </body>
 </html>
+
+<?php
+    include_once('Templates/avatar_selection.php');
+    include_once('Templates/footer.php');
+  
+  if (isset($_SESSION['sent_code']) && isset($_POST['typed_code'])) {
+    
+    if ($_POST['typed_code'] != $_SESSION['sent_code']) : 
+?>
+      <script>
+        document.getElementById("p-error_message").textContent = 'Code verification failed';
+      </script>
+<?php 
+    else :
+?>
+      <script type="module" defer>
+        //// POSTED VALUES PASSING TO JAVASCRIPT WITHOUT ECHOING
+        const postData = <?php echo json_encode($_POST); ?>;
+        afterCodeVerification(postData);
+      </script>
+<?php 
+    endif; 
+    unset($_SESSION['sent_code']);
+  }
+
+  
