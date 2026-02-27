@@ -79,11 +79,9 @@ const loadGames = async () => {
         releaseDate = `Release date: ${game.released}`;  
         
       let item = '';
+      
       //// FILTER NON SUITABLE RESULTS  ////
-
-     //if(tags.length=== 0) alert(tags.length);
-     //console.log(game.tags);
-      if ( ! tags.some(tag => tag === 312 || tag === 786)) 
+      if ( ! tags.some(tag => tag === 44 || tag === 312 || tag === 786)) 
       
       //// CREATE THE ELEMENT TO DISPLAY ////
         item =

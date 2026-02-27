@@ -18,7 +18,7 @@ form.addEventListener(`submit`, e=>{
   newPass= newPassInput.value;
 
   if( ! isValidPassword(newPass)){
-     errorMessage.textContent= `Weak password. Use 8–20 characters with upper & lowercase letters, a number, and a special character`;
+     errorMessage.textContent= `Weak password. Use 8-20 characters with upper & lowercase letters, a number, and a special character`;
     return;
   }
   

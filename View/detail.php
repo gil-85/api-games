@@ -1,12 +1,11 @@
 <?php
-    $mainCss = '../Asset/css/main.css';
-    $detailCss = '../Asset/css/detail.css';
-    $mainJs = '../Asset/js/main.js';
-    $detailJs = '../Asset/js/detail.js';
-
-    $title = 'DETAIL';
-    
-    include_once('Templates/header.php')
+  $mainCss = '../Asset/css/main.css';
+  $detailCss = '../Asset/css/detail.css';
+  $mainJs = '../Asset/js/main.js';
+  $detailJs = '../Asset/js/detail.js';
+  $title = 'DETAIL';
+  
+  include_once('Templates/header.php')
   ?>
   <div id="loading">LOADING</div>
   <h2></h2>

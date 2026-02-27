@@ -93,6 +93,7 @@ btnForgotPassword.addEventListener('click', ()=>{
 
    formCredentials.style.display = 'none';
    formEmailToCode.style.display = 'flex';
+   errorMessage.textContent= ``;
 });
 
 

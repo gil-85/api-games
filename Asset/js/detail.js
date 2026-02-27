@@ -14,6 +14,7 @@ const btnLoadMore = document.querySelector(`#btn-load_more`);
 const btnMoreScreenshots = document.querySelector('#btn-more_screenshots');
 
 let isFavorite= false;
+const btnFav = document.createElement("button");
 
 //// FORMAT ARRAYS RESULTS ////
 const getStrGenres = (genres) => { return genres.map(each => each.name).join(', '); };
@@ -78,16 +79,18 @@ function checkFavorite(userId, dataDetailId){
       
       isFavorite= data.response;
       
-      document.querySelector('h2').innerHTML+= `<button id="toggle_fav"></button>`;
-      const btnFav= document.querySelector(`#toggle_fav`);
+      const h2 = document.querySelector("h2");
 
-     if(isFavorite){
-        action= `removeFav`;
-        btnFav.textContent= `Remove from favorite`;
-      }else{
-       action= `addFav`;
-       btnFav.textContent= `Add to favorite`;
-      } 
+      h2.appendChild(btnFav);
+      btnFav.id= `btn-toggle_fav`;      
+      
+      if (isFavorite) {
+        action = `removeFav`;
+        btnFav.innerHTML= `<span>⭐</span><p>REMOVE FAVORITE</p>`;
+      } else {
+        action = `addFav`;
+        btnFav.innerHTML= `<span>☆</span><p>ADD FAVORITE</p>`; 
+      }
 
     //// BUTTON TO ADD IN FAVORIES
       ToggleFav(btnFav, action, userId, dataDetailId);
@@ -130,18 +133,19 @@ function ToggleFav(btnFav, action, userId, dataDetailId){
        
           if(action=== `addFav`){
             action= `removeFav`;
-            btnFav.textContent= `Remove from favorite`;
+            btnFav.innerHTML= `<span>⭐</span><p>REMOVE FAVORITE</p>`;
           }else{
             action= `addFav`
-            btnFav.textContent= `Add to favorite`;
+            btnFav.innerHTML= `<span>☆</span><p>ADD FAVORITE</p>`;
+          
           } 
-
+          
         }catch (error) {
           console.error('Error:', error);
         }   
       }
-}
-
+    }
+  
 //// FETCH GAME BY ID ////
 const loadGame = async () => {
   try{
@@ -149,31 +153,17 @@ const loadGame = async () => {
     
     const resDetail = await fetch(urlDetail);
     const dataDetail = await resDetail.json();
+    document.querySelector('h2').innerHTML = `${dataDetail.name}`;
     console.log(dataDetail);
     
     //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
     if (settingsButton){
-      document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
       const userId= document.querySelector(`#spn-user_id`).textContent;
       
       checkFavorite(userId, dataDetail.id);
-      
-      
-      
-      // if ( ! isFavorite) {
-        //   document.querySelector('h2').innerHTML =
-//     `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}">!♡ remove ${dataDetail.id}</button>`;
-// } else {
-  //   document.querySelector('h2').innerHTML =
-  //     `${dataDetail.name} &emsp; <button id="fav_${dataDetail.id}">♡ add ${dataDetail.id}</button>`;
-  // }  
-/////////////////////////////////////////////////////////////////
-    }//else document.querySelector('h2').innerHTML = `${dataDetail.name} &emsp;`;
-
-
-
-    
-    
+      /////////////////////////////////////////////////////////////////
+    }
+ 
   let tags = 'Tags unavailable';
   let backgroundImage = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
   let description = 'Description unavailable'; 
@@ -255,7 +245,6 @@ const loadGame = async () => {
   }
 }
 
-
 let pageSreens = 1;
 
 btnLoadMore.addEventListener(`click`,()=>{
@@ -271,8 +260,6 @@ btnLoadMore.addEventListener(`click`,()=>{
   
   btnLoadSeriesDlc.parentNode.classList.remove(`ninja`);
 });
-
-
 
 btnMoreScreenshots.addEventListener('click', () =>{
   loadScreensMovies('screenshots', pageSreens);
@@ -330,8 +317,6 @@ function eventToImgs(){
     });
   });
 }
-
-
 
 //// FETCH THE API KEY TO FETCH THE GAME ////
 fetchKey(loadGame);

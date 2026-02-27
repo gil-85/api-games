@@ -90,8 +90,8 @@ function searchFavorite(userId){
       
      // const presetLinks_1=`<a href="View/list.php?title=Favories&ids=${param}">FAVORITES</a>`;
       let presetLinks_1= param.length=== 0 
-      ? `<a href="#" id="disabled">FAVORITES</a>`
-       :`<a href="View/list.php?title=Favorites&ids=${param}">FAVORITES</a>`;
+      ? `<a href="#" id="disabled">FAVORITES ⭐</a>`
+       :`<a href="View/list.php?title=Favorites&ids=${param}">FAVORITES ⭐</a>`;
 
       presetLinks_1+=`<button id="btn-disconnect">LOG OUT</button>`;
                          
