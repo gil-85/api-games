@@ -18,29 +18,27 @@ const fetchKey = async (func) => {
 //// LINK TO THE HOME PAGE ON THE HEADER TITLE IF NOT ALREADY ON THE HOME PAGE //// 
 if(document.querySelector(`h2`).textContent !== `Home`)
   document.querySelector(`#h1_link`).innerHTML =
-  
   `
   <a href="../index.php">
-    <h1>Project Games api</h1>
+    <h1>Games_api</h1>
   </a> 
   `;
-
   //// BUTTON EDIT USER IF CONNECTED AND NOT ON THE EDIT PAGE////
-  const settingsButton = document.querySelector(`#btn-edit_user`);
-  if (settingsButton) {
+  const dEditUser = document.querySelector(`#d-edit_user`);
+  if (dEditUser) {
     if( ! currentURL.includes(`update`)){
       
       if( ! currentURL.includes(`index`))
-        settingsButton.addEventListener(`click`, () => {
+        dEditUser.addEventListener(`click`, () => {
           window.location = 'update_profil.php';
         });
 
       else 
-        settingsButton.addEventListener(`click`, () => {
+        dEditUser.addEventListener(`click`, () => {
           window.location = 'View/update_profil.php';
         });
     
-    }else settingsButton.style.display = `none`;
+    }else dEditUser.style.display = `none`;
   }
 
 //// KEEP THE THEME CHOOSED ON EVERY PAGE USING THE LOCALSTORAGE ////
@@ -48,10 +46,9 @@ const theme = localStorage.getItem('theme');
 if (theme !== null) 
   if (theme === 'Light theme')
     document.body.classList.add('light-theme');
- 
 
 //// DISPLAY THE AVATAR AND ITS BACKGROUND IF CONNECTED
-  if (settingsButton) {
+  if (dEditUser) {
     //const strRawHeaderAvatar= document.querySelector(`#spn-raw_header_avatar`).textContent;
     
     const rawStrHeaderAvatar = document.querySelector("#spn-header_avatar");

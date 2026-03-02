@@ -52,8 +52,6 @@ const presetLinks =
     <a href="View/list.php?title=Last%20releases&dates=${lastYear},${today}">LAST RELEASES</a>
     <a href="View/list.php?title=Future%20releases&dates=${today},${future}">FUTURE RELEASES</a>
   `;
-
-  
  
 document.querySelector('nav').insertAdjacentHTML(`afterbegin`, presetLinks);
 
@@ -62,7 +60,7 @@ document.querySelector('nav').insertAdjacentHTML(`afterbegin`, presetLinks);
   //       <button id="btn-disconnect">LOG OUT</button>
 //// GET THE FAVORITE GAMES ID IF ANY AND IF USER IS LOGGED IN
   
-if (settingsButton){
+if (dEditUser){
   const spnUserId= document.querySelector(`#spn-user_id`).textContent;
   searchFavorite(spnUserId);
 }

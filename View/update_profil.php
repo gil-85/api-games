@@ -20,14 +20,6 @@
 
     <input type="submit" value="ENTER">
     </form>
-
-
-    <!-- to remove /////////////////////////////////////////-->
-    <div class="a-btn above-footer">
-      <p>Already an account : <a href="log_in.php">Log in</a>
-      </p>
-    </div>
-       <!-- //////////////////////////////////////-->
     <p id="p-error_message"></p> 
   </div>
 

@@ -157,11 +157,17 @@ const loadGame = async () => {
     console.log(dataDetail);
     
     //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
-    if (settingsButton){
+    if (dEditUser){
       const userId= document.querySelector(`#spn-user_id`).textContent;
       
       checkFavorite(userId, dataDetail.id);
       /////////////////////////////////////////////////////////////////
+    }else{
+      const h2 = document.querySelector("h2");
+      const pLogToFav= document.createElement("p");
+      pLogToFav.id= `btn-toggle_fav`;  
+      pLogToFav.textContent= `Log in to add favorite`;
+      h2.appendChild(pLogToFav);
     }
  
   let tags = 'Tags unavailable';

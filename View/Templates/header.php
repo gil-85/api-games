@@ -45,7 +45,7 @@
     if ($jsFile) {
       echo '<script src="' . $jsFile . '" defer></script>
       <!-- Line break -->';
-    }
+    }// ☄️
   }
   ?>
 
@@ -53,20 +53,17 @@
 </head>
 <body>
   <header>
-    <div id="h1_link"><h1>Project Games api ☄️</h1></div>
+    <div id="h1_link"><h1>Games_api</h1></div>
     <?php
+    ### DISPLAY THE USER LOGNAME AND AVATAR WHEN CONNECTED (CLICKABLE TO EDIT)
       if (isset($_SESSION['user_id'])) {
         echo '<span class= ghost id= "spn-user_id">' .  $_SESSION['user_id'] . '</span>';
-        //  echo '&emsp; _email: ' . $_SESSION['email'];
-        //
-        
-       // echo '&emsp; <span class= ghost id="spn-raw_header_avatar">'. $_SESSION['avatar'] . '</span>';
-        echo '&emsp; <span id="spn-header_avatar">'. $_SESSION['avatar'] . '</span>';
-        
-      echo '&emsp;' . $_SESSION['logname'];
-        echo '&emsp; <button type="button" id="btn-edit_user">Edit</button>';
+        echo '<div id="d-edit_user">';
+        echo '<span id="spn-header_avatar">'. $_SESSION['avatar'] . '</span>';
+        echo '<p>' . $_SESSION['logname'] . '</p>';
+        echo '</div>';
       } else {
-        echo 'Not logged';
+        echo '<p>Not logged</p>';
       }
     ?>
   </header>

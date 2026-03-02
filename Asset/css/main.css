@@ -44,19 +44,57 @@ header{
   text-align: center;
   position: sticky;
   top: 0;
-  max-height: 4em;
+  height: 4em;
   margin-top: .4em;
   background-color: var(--bkg-clr_00);
   z-index: 1;
+
+  border: .1em solid #0ff0; 
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 h1{
+  font-size: 1.75rem;
+
   color: var(--txt-clr);
+
+  text-shadow:
+    -1px 0 0 var(--txt-clr_neg),
+    0 -1px 0 var(--txt-clr_neg),
+    1px 0 0 var(--txt-clr_neg),
+    0 1px 0 var(--txt-clr_neg)
+  ;
+}
+
+#d-edit_user{
+  padding: .7em;
+
+  text-shadow:
+    -1px 0 0 var(--txt-clr_neg),
+    0 -1px 0 var(--txt-clr_neg),
+    1px 0 0 var(--txt-clr_neg),
+    0 1px 0 var(--txt-clr_neg)
+  ;
+
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+} 
+
+#d-edit_user> *{
+  border: .1em solid #f0f0;
 }
 
 h2{
   text-align: center;
   height: 2em;
+
+  margin-top: .8em;
 
   display: flex;
   justify-content: space-evenly;
@@ -68,17 +106,25 @@ footer{
   bottom: 0px;
   width: 100%;
   max-height: 4em;
-  padding: .3em;
+  padding: .8em;
   background-color: var(--bkg-clr_00);
-
+  
   z-index: 1;
 }
 
 footer>p{
- word-wrap: break-word;
+  font-size: .9rem;
+  word-wrap: break-word;
   line-height: 1.4em; 
- width: 96%;
- background-color: #f000;
+  width: 96%;
+  background-color: #f000;
+
+  text-shadow:
+    -1px 0 0 var(--txt-clr_neg),
+    0 -1px 0 var(--txt-clr_neg),
+    1px 0 0 var(--txt-clr_neg),
+    0 1px 0 var(--txt-clr_neg)
+  ;
 }
 
 .ninja{
@@ -144,8 +190,6 @@ footer>p{
   background-image: linear-gradient(45deg, var(--search_count-clr) .8em, #0000 .8em), linear-gradient(180deg, #0000 50%, var(--bkg-btn) 50%);
 }
 
-
-
 img{
  width: 100%;
 }
@@ -186,15 +230,20 @@ img{
 #spn-header_avatar{
 
   padding: .2em;
-
- text-shadow:
-    -1px 0 0 var(--txt-clr_neg),
-    0 -1px 0 var(--txt-clr_neg),
-    1px 0 0 var(--txt-clr_neg),
-    0 1px 0 var(--txt-clr_neg)
-  ;
-
   border-radius: 7px;
+}
+
+
+@media (max-width: 480px) {
+  #d-edit_user{
+    font-size: .8em;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  footer> p{
+    font-size: .8em;
+  }
 }
 
 

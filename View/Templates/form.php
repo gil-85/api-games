@@ -6,7 +6,6 @@ if (isset($_SESSION['email'])) {
    $lognameValue = $_SESSION['logname'];
    $avatarValue = $_SESSION['avatar'];
    $avatarValue = preg_replace('/\d.*$/', '', $avatarValue);
-
 }
 ?>
 

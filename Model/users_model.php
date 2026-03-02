@@ -58,16 +58,12 @@ function updateUser($logname, $avatar) {
 
 
 function checkIfFav($userId, $gameId){
-    require_once("dbh.php");
-
-    $query = "SELECT EXISTS (SELECT 1 FROM favorite WHERE user_id = ? AND game_id = ?) AS fav_exists";
-
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$userId, $gameId]);
-
-    $exists = (bool) $stmt->fetchColumn();
-
-    return $exists;
+   require_once("dbh.php");
+   $query = "SELECT EXISTS (SELECT 1 FROM favorite WHERE user_id = ? AND game_id = ?) AS fav_exists";
+   $stmt = $pdo->prepare($query);
+   $stmt->execute([$userId, $gameId]);
+   $exists = (bool) $stmt->fetchColumn();
+   return $exists;
 }
 
 
