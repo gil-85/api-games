@@ -20,7 +20,7 @@ if(document.querySelector(`h2`).textContent !== `Home`)
   document.querySelector(`#h1_link`).innerHTML =
   `
   <a href="../index.php">
-    <h1>Games_api</h1>
+    <h1>GAMER CRUISE</h1>
   </a> 
   `;
   //// BUTTON EDIT USER IF CONNECTED AND NOT ON THE EDIT PAGE////
@@ -46,6 +46,18 @@ const theme = localStorage.getItem('theme');
 if (theme !== null) 
   if (theme === 'Light theme')
     document.body.classList.add('light-theme');
+
+//// DISPLAY MY NAME IN LETTERS WHEN HOVERING THE FOOTER PARAGRAPHE 
+const p = document.querySelector("footer > p");
+const originalText = p.textContent;
+
+p.addEventListener("mouseenter", () => {
+  p.textContent = "[■_■¬ ]_\u2003MADE BY\u2003G I L\u00A0\u2002D U P L I S S Y";
+});
+
+p.addEventListener("mouseleave", () => {
+  p.textContent = originalText;
+});
 
 //// DISPLAY THE AVATAR AND ITS BACKGROUND IF CONNECTED
   if (dEditUser) {

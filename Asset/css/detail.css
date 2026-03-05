@@ -41,7 +41,7 @@
 }
 
 #btn-toggle_fav{
-  font-size: .5rem;
+  font-size: .7rem;
   margin-left: 7em;
   width: 12em;
   color: var(--txt-clr);
@@ -63,7 +63,7 @@
 }
 
 #btn-toggle_fav> span{
-  font-size: 1.4rem;
+  font-size: 2.1rem;
 }
 
 .d-screens-movies{
@@ -109,4 +109,14 @@
     --side_space: 4em;
   }
 
+}
+
+@media (max-width: 480px) {
+  #btn-toggle_fav{
+    font-size: .5rem;
+  }
+
+  /* #btn-toggle_fav> span{
+    font-size: 1.4rem;
+  } */
 }

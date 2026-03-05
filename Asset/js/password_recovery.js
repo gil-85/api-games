@@ -17,6 +17,7 @@ form.addEventListener(`submit`, e=>{
   
   newPass= newPassInput.value;
 
+  //// PASSWORD COMPLEXITY
   if( ! isValidPassword(newPass)){
      errorMessage.textContent= `Weak password. Use 8-20 characters with upper & lowercase letters, a number, and a special character`;
     return;
@@ -26,8 +27,6 @@ form.addEventListener(`submit`, e=>{
     errorMessage.textContent= `The passwords don't match`;
     return; 
   }
-
-  //// add password complexity to do
 
   action= `updatePassword`;  
   newPass = CryptoJS.SHA256(newPass).toString();

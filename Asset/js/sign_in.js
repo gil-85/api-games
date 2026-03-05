@@ -39,7 +39,7 @@ formCredentials.addEventListener(`submit`,(e)=>{
     errorMessage.textContent= `The logname can only have letters, numbers, hyphens or underscores an name must be between 4 and 16 characters`;
     return;
   }
-
+//// PASSWORD COMPLEXITY
   if( ! isValidPassword(password)){
      errorMessage.textContent= `Weak password. Use 8–20 characters with upper & lowercase letters, a number, and a special character`;
     return;
@@ -152,8 +152,8 @@ const logIn = async (formData) => {
    try {
      
       const res = await fetch('../Controller/users_controller.php', {
-         method: 'POST',
-         body: formData,
+        method: 'POST',
+        body: formData,
    });
    if ( ! res.ok) throw new Error('Network response was not ok');
     window.location = '../index.php';

@@ -53,7 +53,7 @@
 </head>
 <body>
   <header>
-    <div id="h1_link"><h1>Games_api</h1></div>
+    <div id="h1_link"><h1>GAMER CRUISE</h1></div>
     <?php
     ### DISPLAY THE USER LOGNAME AND AVATAR WHEN CONNECTED (CLICKABLE TO EDIT)
       if (isset($_SESSION['user_id'])) {

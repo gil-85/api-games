@@ -21,7 +21,7 @@ const getStrGenres = (genres) => { return genres.map(each => each.name).join(', 
 
 const getStrPlatforms = (platforms) => { return platforms.map(each => each.platform.name).join(', '); };
 
-const getStrTags = (tags) => { return tags.map(each => '<small>"' + each.name + '" id: ' + each.id +'</small>' +  ' &nbsp;').join(' '); };
+const getStrTags = (tags) => { return tags.map(each => '<small>' + each.name + '</small>' +  ' &nbsp;').join(' '); };
 
 const getStrDevelopers = (developers) => { return developers.map(each => each.name).join(`[-_-]__/`); };
 
@@ -39,7 +39,7 @@ const getMoviesStr = (movies) => {
   <div>
   ` ).join(' '); };
   
-const showArray = (params, name, maxLength = 1000) => {
+const showArray = (params, name, maxLength = 2100) => {
       let strParams= ``;
       switch(name){
         case `genres` :  strParams = getStrGenres(params); break;
@@ -53,8 +53,6 @@ const showArray = (params, name, maxLength = 1000) => {
       if(strParams.length > 0) return strParams
     return;
 };
-
-
 
 function checkFavorite(userId, dataDetailId){
   
@@ -207,6 +205,7 @@ const loadGame = async () => {
     
   if(dataDetail.tags !== null && dataDetail.tags !== undefined && dataDetail.tags.length > 0)
     tags = showArray(dataDetail.tags, 'tags');
+  
   if(dataDetail.developers !== null && dataDetail.developers !== undefined && dataDetail.developers.length > 0)
   developers = showArray(dataDetail.developers, 'developers');
   

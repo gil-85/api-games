@@ -8,7 +8,7 @@ const aRightEyes = strRightEyes.split(' ');
 const strLeftEyes = `- ▀ o T < • ◢ ◣ ° ^ ˇ × ♡ ๏ ◔ ▬ * ◘ ☼ ⌂ » « ♦ ↔`;
 const aLeftEyes = strLeftEyes.split(' ');
 
-const strMouth = `_ __ . .. … ‿ ⎵ ᴥ ︿ ▂ ⌓ ෴ ∟ ┼ ↓`; 
+const strMouth = `_ __ . .. … ‿ ⎵ ᴥ ︿ ▂ ⌓ ෴ ∟ ↓`; 
 const aMouth = strMouth.split(' ');
 
 const elementAvatar = document.querySelector(`#d-element_avatar`);

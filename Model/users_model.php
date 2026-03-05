@@ -1,19 +1,4 @@
 <?php
-
-// function searchIfUserExist($email, $logname) {
-//    require_once("dbh.php");
-  
-//    $query = "SELECT email, logname FROM users WHERE email = ? OR logname = ?;";
-//    $stmt = $pdo->prepare($query);
-//    $stmt->execute([$email, $logname]);
-   
-//    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-//    $pdo = null;
-//    $stmt = null;
-//    return $user;
-// } 
-   
-
 function  signIn($email, $logname, $password, $avatar){
    require_once("dbh.php");
    $query = "INSERT INTO users (email, logname, password, avatar) VALUES (?,?,?,?);";
@@ -43,14 +28,14 @@ function updateUser($logname, $avatar) {
    $query = "UPDATE users SET logname=?, avatar=? WHERE user_id=?";
    $stmt = $pdo->prepare($query);
 
-   // Check if the query was executed successfully
+   //// CHECK IF THE QUERY WAS EXECUTED SUCCESSFULLY
    $result = $stmt->execute([$logname, $avatar, $id]);
 
-   // Close the connection and statement
+   //// CLOSE THE CONNECTON AND STATEMENT
    $pdo = null;
    $stmt = null;
 
-   // Return success or failure
+   //// RETURN SUCCESS OR FAILURE
    return $result;
 }
 
@@ -74,14 +59,10 @@ function addFav($userId, $gameId){
    
    $stmt = $pdo->prepare($query);
 
-   // Check if the query was executed successfully
    $result = $stmt->execute([$userId, $gameId]);
-
-   // Close the connection and statement
    $pdo = null;
    $stmt = null;
 
-   // Return success or failure
    return $result;
 }
 
@@ -96,7 +77,6 @@ function removeFav($userId, $gameId){
    $stmt->execute([$userId, $gameId]);
    $deletedRows = $stmt->rowCount();
 
-   // Close the connection and statement
    $pdo = null;
    $stmt = null;
    
@@ -121,16 +101,10 @@ function searchFav($userId){
 
 function updatePassword($newPass, $email): bool {
    require_once("dbh.php");
-
    $query = "UPDATE users SET password= ? WHERE email= ?";
    $stmt = $pdo->prepare($query);
-
-   // Check if the query was executed successfully
    $stmt->execute([$newPass, $email]);
-   // Close the connection and statement
    $pdo = null;
-   
-   // Return success or failure
    return $stmt->rowCount() > 0;
 }
 
