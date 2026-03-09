@@ -23,7 +23,7 @@ const getStrPlatforms = (platforms) => { return platforms.map(each => each.platf
 
 const getStrTags = (tags) => { return tags.map(each => '<small>' + each.name + '</small>' +  ' &nbsp;').join(' '); };
 
-const getStrDevelopers = (developers) => { return developers.map(each => each.name).join(`[-_-]__/`); };
+const getStrDevelopers = (developers) => { return developers.map(each => each.name).join(`, `); };
 
 const getScreenshotsStr = (screenshots) => { return screenshots.map(each => `
   <div class="d-screens-movies_item">
@@ -169,7 +169,7 @@ const loadGame = async () => {
     }
  
   let tags = 'Tags unavailable';
-  let backgroundImage = `<img src="../Asset/Images/alt.png" alt="${dataDetail.name} image">`;
+  let backgroundImage = `<img src="../Asset/images/alt.png" alt="${dataDetail.name} image">`;
   let description = 'Description unavailable'; 
   let genres = 'Genres unavailable';
   let esrb = 'ESRB unavailable';
