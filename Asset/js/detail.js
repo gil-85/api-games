@@ -15,7 +15,7 @@ const btnMoreScreenshots = document.querySelector('#btn-more_screenshots');
 
 let isFavorite= false;
 const btnFav = document.createElement("button");
-
+let gameName= ``;
 //// FORMAT ARRAYS RESULTS ////
 const getStrGenres = (genres) => { return genres.map(each => each.name).join(', '); };
 
@@ -29,15 +29,15 @@ const getScreenshotsStr = (screenshots) => { return screenshots.map(each => `
   <div class="d-screens-movies_item">
     <img src="${each.image}"  alt="screenshot"></div>`).join(' '); };
 
-const getMoviesStr = (movies) => {
-  return movies.map(each =>  `
-  <div class="d-screens-movies_item">
-    <p>${each.name}</p>
-    <video controls width="100%" src="${each.data.max}" poster="${each.preview}">
-        Your browser does not support the video tag.
-    </video>
-  <div>
-  ` ).join(' '); };
+// const getMoviesStr = (movies) => {
+//   return movies.map(each =>  `
+//   <div class="d-screens-movies_item">
+//     <p>${each.name}</p>
+//     <video controls width="100%" src="${each.data.max}" poster="${each.preview}">
+//         Your browser does not support the video tag.
+//     </video>
+//   <div>
+//   ` ).join(' '); };
   
 const showArray = (params, name, maxLength = 2100) => {
       let strParams= ``;
@@ -47,7 +47,7 @@ const showArray = (params, name, maxLength = 2100) => {
         case `tags` : strParams = getStrTags(params); break;
         case `developers` : strParams = getStrDevelopers(params); break;
         case `screenshots` :  strParams = getScreenshotsStr(params); break;
-        case `movies` :  strParams = getMoviesStr(params); break;
+       // case `movies` :  strParams = getMoviesStr(params); break;
       }
       if(strParams.length > maxLength) return strParams.substring(0, maxLength) + `...`;
       if(strParams.length > 0) return strParams
@@ -148,10 +148,14 @@ function ToggleFav(btnFav, action, userId, dataDetailId){
 const loadGame = async () => {
   try{
     urlDetail = `https://api.rawg.io/api/games/${id}?key=${apikey}`; 
+
     
     const resDetail = await fetch(urlDetail);
     const dataDetail = await resDetail.json();
     document.querySelector('h2').innerHTML = `${dataDetail.name}`;
+    gameName= dataDetail.name; //////////////////////////////////////////////////////////// FOR YOUTUBE VIDEO
+    console.log(dataDetail.youtube_count);
+    console.log(dataDetail.movies_count);
     console.log(dataDetail);
     
     //// SHOW THE ADD TO FAVORITE BUTTON IF LOGGED IN
@@ -259,53 +263,129 @@ btnLoadMore.addEventListener(`click`,()=>{
   contentScreenshots.classList.add('content-primary');
   contentMovies.classList.add('content-primary'); 
  
-  loadScreensMovies('screenshots', pageSreens);
+  loadScreensMovies(pageSreens);
   pageSreens ++;
-  loadScreensMovies('movies', 1);
+  //loadScreensMovies('movies', 1);
   
   btnLoadSeriesDlc.parentNode.classList.remove(`ninja`);
 });
 
 btnMoreScreenshots.addEventListener('click', () =>{
-  loadScreensMovies('screenshots', pageSreens);
+  loadScreensMovies(pageSreens);
   pageSreens ++;
 });
 
 //// FETCH SCREENS AND MOVIES OF THE GAME IF ANY ////
-const loadScreensMovies = async (arg, page) => {
+const loadScreensMovies = async (page) => {
+
+
+ 
+
   try{
-    url = `https://api.rawg.io/api/games/${id}/${arg}?key=${apikey}&page=${page}`; 
+    url = `https://api.rawg.io/api/games/${id}/screenshots?key=${apikey}&page=${page}`; 
     
     const res = await fetch(url);
     const data = await res.json();
     let nextGameListURL = data.next ? data.next : null;
-    let extras = `No ${arg}` ;
+    let extras = `NO SCREENSHOT` ;
     
     if(data.results !== null && data.results !== undefined && data.results.length > 0)
-         extras = showArray(data.results ,arg);  
+      extras = showArray(data.results, 'screenshots');  
+    //////////////////////////////////////////////////////////////////////////
+    // else {
+
+    //   const name = gameName;
+    
+    //   const query = `${gameName} trailer`;
+
+    //   alert(query);
+    //   console.log(query);
+      
+    // }
+
+//////////////////////////////////////////////////////////////////////////////////
+
     const itemExtra = 
       `
       <div class="d-screens-movies">
-        <h3>${arg.charAt(0).toUpperCase()
-  + arg.slice(1)}</h3>
+        <h3>SCREENSHOTS</h3>
           ${extras}
       </div>
       `;
-      
-      if(arg === 'screenshots'){
         
-        contentScreenshots.insertAdjacentHTML(`beforeend`, itemExtra); 
-        
+        contentScreenshots.insertAdjacentHTML(`beforeend`, itemExtra);   
         btnMoreScreenshots.parentNode.classList.toggle('ghost', ! nextGameListURL);
-      }
+      
     
-      else contentMovies.insertAdjacentHTML(`beforeend`, itemExtra);
+      // else contentMovies.insertAdjacentHTML(`beforeend`, itemExtra);
     
     eventToImgs();
     
     }catch(err){
       alert(`ERROR : ${err}`);
   }
+
+
+
+
+    //////////////////////////////////////////////////
+try {
+  const query = encodeURIComponent(`${gameName} trailer`);
+
+  const url = `https://corsproxy.io/?https://www.youtube.com/results?search_query=${query}`;
+
+  const res = await fetch(url);
+  const html = await res.text();
+
+  // 2️⃣ Extract first video ID
+  const videoIdMatch = html.match(/"videoId":"(.*?)"/);
+
+  if (!videoIdMatch) {
+    throw new Error("No video found");
+  }
+
+  const videoId = videoIdMatch[1];
+
+  // 3️⃣ Create iframe
+  const container = document.createElement("div");
+  container.className = "d-screens-movies";
+
+  container.innerHTML = `
+    <div class="d-screens-movies">
+      <h3>TRAILER</h3>
+      <div class="iframe-container">
+        <iframe
+          src="https://www.youtube.com/embed/${videoId}"
+          width="560"
+          height="315"
+          allowfullscreen>
+        </iframe>
+      </div>  
+    </div>
+  `;
+
+  contentMovies.appendChild(container);
+
+} catch (err) {
+  console.error(err);
+
+  const div= document.createElement("div");
+  div.classList.add("a-btn");
+  const aLinkToYoutube = document.createElement("a");
+
+  aLinkToYoutube.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(gameName + " trailer")}`;
+  aLinkToYoutube.textContent = "SEARCH ON YOUTUBE";
+  aLinkToYoutube.target = "_blank";
+  aLinkToYoutube.rel = "noopener noreferrer"; // 🔒 important for security
+
+ // aLinkToYoutube.classList.add("a-btn");
+  div.appendChild(aLinkToYoutube);
+  contentMovies.appendChild(div);
+}
+    //////////////////////////////////////////////////
+
+
+
   loadingElement.classList.add(`ninja`);
 }
 

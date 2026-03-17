@@ -63,7 +63,7 @@ const developersSelectedCount = document.querySelector('#developers>span');
 let platformsPage = 1;
 let genresPage = 1;
 
-//// TRACK THE LIST HEIGHT TO PLACE THH ADD MORE BUTTONS ACCORDINGLY ////
+//// TRACK THE LIST HEIGHT TO PLACE THE ADD MORE BUTTONS ACCORDINGLY ////
 let platformsHeight = 0;
 let genresHeight = 0;
 
@@ -212,7 +212,6 @@ function validSelected(arg, element, target = null) {
       break;
       case 'tags': 
         if(element.id === undefined){
-     // if(element.id === undefined || element.id === 50 || element.id === 312 || element.id === 786){
         document.querySelector('#d-tag_not_found').classList.remove('ninja');
         return;
         }else{
@@ -345,7 +344,7 @@ updateEnd.addEventListener('change', e => {
 
 //// CREATE RESEARCH BY DATE ////
 function numberOfDays(dateStart, dateEnd, arg, dateSelectedOk){
-  ;   //// COUNT THE TIME BETWEEN THE START AND END DATE ////
+  //// COUNT THE TIME BETWEEN THE START AND END DATE ////
   let start = new Date(dateStart);
   let end = new Date(dateEnd);
   const timeDifference = end - start
@@ -449,7 +448,7 @@ function removeSelection(arg, id, divId){
     });
     break;
     case 'developers':
-      aSelectedPublishers.forEach((selectedDeveloper, index) => {
+      aSelectedDevelopers.forEach((selectedDeveloper, index) => {
       if (selectedDeveloper === id) {
         aSelectedDevelopers.splice(index, 1);
         developersSelectedCount.textContent = aSelectedDevelopers.length;

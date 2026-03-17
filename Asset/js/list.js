@@ -81,7 +81,12 @@ const loadGames = async () => {
       let item = '';
       
       //// FILTER NON SUITABLE RESULTS  ////
-      if ( ! tags.some(tag => tag === 44 || tag === 312 || tag === 786 || tag === 15919)) 
+      // 44 ?
+       if ( ! tags.some(tag =>
+        tag === 312 
+        || tag === 786 
+        || tag === 15919
+       )) 
       
       //// CREATE THE ELEMENT TO DISPLAY ////
         item =
