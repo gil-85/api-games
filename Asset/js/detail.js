@@ -275,11 +275,9 @@ btnMoreScreenshots.addEventListener('click', () =>{
   pageSreens ++;
 });
 
-//// FETCH SCREENS AND MOVIES OF THE GAME IF ANY ////
+//// FETCH EXTRA SCREENSHOTS OF THE GAME IF ANY ////
 const loadScreensMovies = async (page) => {
 
-
- 
 
   try{
     url = `https://api.rawg.io/api/games/${id}/screenshots?key=${apikey}&page=${page}`; 
@@ -291,19 +289,6 @@ const loadScreensMovies = async (page) => {
     
     if(data.results !== null && data.results !== undefined && data.results.length > 0)
       extras = showArray(data.results, 'screenshots');  
-    //////////////////////////////////////////////////////////////////////////
-    // else {
-
-    //   const name = gameName;
-    
-    //   const query = `${gameName} trailer`;
-
-    //   alert(query);
-    //   console.log(query);
-      
-    // }
-
-//////////////////////////////////////////////////////////////////////////////////
 
     const itemExtra = 
       `
@@ -313,11 +298,9 @@ const loadScreensMovies = async (page) => {
       </div>
       `;
         
-        contentScreenshots.insertAdjacentHTML(`beforeend`, itemExtra);   
-        btnMoreScreenshots.parentNode.classList.toggle('ghost', ! nextGameListURL);
+      contentScreenshots.insertAdjacentHTML(`beforeend`, itemExtra);   
+      btnMoreScreenshots.parentNode.classList.toggle('ghost', ! nextGameListURL);
       
-    
-      // else contentMovies.insertAdjacentHTML(`beforeend`, itemExtra);
     
     eventToImgs();
     
@@ -327,64 +310,73 @@ const loadScreensMovies = async (page) => {
 
 
 
+//// SEARCH FOR A YOUTUBE TRAILER
 
-    //////////////////////////////////////////////////
-try {
+  try {
   const query = encodeURIComponent(`${gameName} trailer`);
 
-  const url = `https://corsproxy.io/?https://www.youtube.com/results?search_query=${query}`;
+  const res = await fetch(
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=${YT_KEY}&type=video&maxResults=1`
+  );
 
-  const res = await fetch(url);
-  const html = await res.text();
+  const data = await res.json();
 
-  // 2️⃣ Extract first video ID
-  const videoIdMatch = html.match(/"videoId":"(.*?)"/);
-
-  if (!videoIdMatch) {
+  if (!data.items || data.items.length === 0) {
     throw new Error("No video found");
   }
 
-  const videoId = videoIdMatch[1];
+  const videoId = data.items[0].id.videoId;
 
-  // 3️⃣ Create iframe
   const container = document.createElement("div");
   container.className = "d-screens-movies";
 
   container.innerHTML = `
-    <div class="d-screens-movies">
-      <h3>TRAILER</h3>
-      <div class="iframe-container">
-        <iframe
-          src="https://www.youtube.com/embed/${videoId}"
-          width="560"
-          height="315"
-          allowfullscreen>
-        </iframe>
-      </div>  
+    <h3>TRAILER</h3>
+    <div class="iframe-container">
+      <iframe
+        src="https://www.youtube.com/embed/${videoId}"
+        allowfullscreen>
+      </iframe>
     </div>
   `;
 
-  contentMovies.appendChild(container);
+    contentMovies.appendChild(container);
+    localStorage.setItem(gameName, videoId);
 
-} catch (err) {
-  console.error(err);
+  } catch (err) {
+    console.error(err);
 
-  const div= document.createElement("div");
-  div.classList.add("a-btn");
-  const aLinkToYoutube = document.createElement("a");
+  //// IF ERROR A LINK SEARCHING FOR THE GAME IN YOUTUBE IS DISPLAYED
+    const div= document.createElement("div");
+    div.classList.add("a-btn");
+    const aLinkToYoutube = document.createElement("a");
 
-  aLinkToYoutube.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(gameName + " trailer")}`;
-  aLinkToYoutube.textContent = "SEARCH ON YOUTUBE";
-  aLinkToYoutube.target = "_blank";
-  aLinkToYoutube.rel = "noopener noreferrer"; // 🔒 important for security
+    aLinkToYoutube.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(gameName)}`;
+    aLinkToYoutube.textContent = "SEARCH ON YOUTUBE";
+    aLinkToYoutube.target = "_blank";
+    aLinkToYoutube.rel = "noopener noreferrer"; //// IMPORTANT FOR SECURITY
 
- // aLinkToYoutube.classList.add("a-btn");
-  div.appendChild(aLinkToYoutube);
-  contentMovies.appendChild(div);
-}
-    //////////////////////////////////////////////////
+    div.appendChild(aLinkToYoutube);
+    contentMovies.appendChild(div);
 
 
+
+    /**
+     * 
+     * 
+     * const container = document.createElement("div");
+      container.className = "d-screens-movies";
+        
+      const title = document.createElement("h3");
+      title.textContent = "TRAILER";
+        
+      container.appendChild(title);
+      container.appendChild(aLinkToYoutube);
+        
+      contentMovies.appendChild(container);
+     * 
+     */
+  }
 
   loadingElement.classList.add(`ninja`);
 }

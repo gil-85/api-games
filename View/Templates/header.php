@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <?php
   $cssFiles = [
       isset($indexMainCss) ? $indexMainCss : null,
@@ -33,6 +34,7 @@
       isset($passwordRecoveryJs) ? $passwordRecoveryJs : null,
       isset($signCodeJs) ? $signCodeJs : null
   ];
+  
 
   foreach ($cssFiles as $cssFile) {
     if ($cssFile) {
@@ -67,4 +69,8 @@
       }
     ?>
   </header>
+
+
+
+
 

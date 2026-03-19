@@ -9,6 +9,7 @@ const fetchKey = async (func) => {
     if ( ! res.ok) throw new Error('Network response was not ok');
     const data = await res.json();
     apikey = data.apikey;
+    YT_KEY = data.YOUTUBE_API_KEY;
     func();
     } catch (error){
     console.error('Error:', error);
