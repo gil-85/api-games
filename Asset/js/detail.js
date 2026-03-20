@@ -442,9 +442,25 @@ const loadSeriesDlc = async (arg, page) => {
   
     let itemSerieDlc = `No ${arg} found`;
     
-    if(games !== null && games !== undefined && games.length > 0){
-      
+    if (games?.length > 0) {
+     
+      if (arg === 'game-series') {
+         if (!document.querySelector('.series-title')) {
+           contentSeries.insertAdjacentHTML('beforebegin', `<p class="series-title">SERIES</p>`);
+         }
+       }
+     
+       if (arg === 'additions') {
+         if (!document.querySelector('.additions-title')) {
+           contentDlc.insertAdjacentHTML('beforebegin', `<p class="additions-title">ADDITIONS</p>`);
+         }
+       }
+
+
+
       games.forEach(game => {
+
+
         itemSerieDlc =    
         `
         <div class="d-serie-dlc_item" id="d-serie-dlc_${game.id}-${game.slug}">

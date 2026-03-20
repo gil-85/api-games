@@ -85,6 +85,7 @@ const loadGames = async () => {
        if ( ! tags.some(tag =>
         tag === 312 
         || tag === 786 
+        || tag === 1131 
         || tag === 15919
        )) 
       

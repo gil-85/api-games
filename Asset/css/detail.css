@@ -75,14 +75,22 @@ h3{
   background-color: var(--bkg-clr_00);
 }
 
+.series-title,.additions-title{
+  text-align: center;
+  margin-top: 1.5em;
+  margin-right: var(--side_space);
+  margin-left: var(--side_space);
+  background-color: var(--bkg-clr_01);
+  border: 0 solid var(--bkg-clr_00); 
+}
+
 .d-screens-movies_item{
-  /* margin-top: 2em; */
   background-color: var(--bkg-clr_01);
 }
 
 .content-secondary{
   text-align: center;
-  margin: 1em var(--side_space);
+  margin: .5em var(--side_space);
   padding: 1em;
   border: .1em solid var(--bkg-clr_00);
   display: flex;
